@@ -25,11 +25,8 @@ The course is runs on 20% rate and worth 6 ECTS credits and, thus, the course wo
     * Title
     * Short description (appr. 3 sentences)
     * Name of the supervisor
-All projects that are/will be published at LISAM will be approved.
 - [ ] Do the job. There will be no lectures or other scheduled course sessions – you are only performing the given task with a very limited support from your supervisor. The supervisor will basically do a short introduction to the project and then you will probably have some mail conversations/very short meetings where you can ask some questions related to your project. Your work on the project will thus be almost independent by default.
 - [ ] Write a final report containing approximately 3-4 pages that describes the background, the problem and your results and send the report to the course leader and your supervisor at latest on 5th of January 2021. Submit it also to LISAM, folder Submissions.
 - [ ] You are also supposed to make a short presentation for your supervisor in order to report your results. Decide some date and time for this with your supervisor: the presentation should be done before  15th of January 2021.
 - [ ] Ask the supervisor to send a message to the course leader proposing a grade (A-F) and a short motivation for this grade (3-4 sentences).
 - [ ] Get the grade: the grade (A-F) will be heavily based on the feedback from your supervisor.
-- If you are delayed with your report and/or your presentation, the last submission opportunity will be on 14th of March 2021 and the presentation should be done before 28th of March 2021, but your grade will be decreased due to inability to fit the ordinary time frames. This means that the maximum grade you can obtain will be "C".
-- If you are unable to fit the time frames indicated in step 8, you will be requested to start a new project when the course starts next time (August 2021).
