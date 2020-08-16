@@ -1,4 +1,10 @@
-# Research Project: Visualizing COVID19 data from different countries
+# Research project
+
+**Topic:** Visualizing COVID19 data from different countries
+
+*Author:* Martin Beneš
+
+*Supervisor:* prof. Krzysztof Bartoszek
 
 ## Task
 
