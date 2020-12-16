@@ -1,0 +1,901 @@
+x,y,Distance
+Prague,Prague,200.0
+Prague,Central Bohemian,0.0
+Prague,South Bohemian,0.0
+Prague,Plzeň,0.0
+Prague,Karlovy Vary,0.0
+Prague,Ústí nad Labem,0.0
+Prague,Liberec,0.0
+Prague,Hradec Králové,0.0
+Prague,Olomouc,0.0
+Prague,South Moravian,0.0
+Prague,Vysočina,0.0
+Prague,Pardubice,0.0
+Prague,Zlín,0.0
+Prague,Moravian-Silesian,0.0
+Prague,Małopolskie,0.0
+Prague,Śląskie,0.0
+Prague,Wielkopolskie,0.0
+Prague,Zachodniopomorskie,0.0
+Prague,Lubuskie,0.0
+Prague,Dolnośląskie,0.0
+Prague,Opolskie,0.0
+Prague,Kujawsko-Pomorskie,0.0
+Prague,Warmińsko-Mazurskie,0.0
+Prague,Pomorskie,0.0
+Prague,Łódzkie,0.0
+Prague,Świętokrzyskie,0.0
+Prague,Lubelskie,0.0
+Prague,Podkarpackie,0.0
+Prague,Podlaskie,0.0
+Prague,Mazowieckie,0.0
+Central Bohemian,Prague,0.0
+Central Bohemian,Central Bohemian,200.0
+Central Bohemian,South Bohemian,29.38663353918495
+Central Bohemian,Plzeň,0.0
+Central Bohemian,Karlovy Vary,0.0
+Central Bohemian,Ústí nad Labem,22.81711294571755
+Central Bohemian,Liberec,21.264317903828797
+Central Bohemian,Hradec Králové,21.795623941225404
+Central Bohemian,Olomouc,0.0
+Central Bohemian,South Moravian,53.03578556210744
+Central Bohemian,Vysočina,0.0
+Central Bohemian,Pardubice,0.0
+Central Bohemian,Zlín,23.497505245930235
+Central Bohemian,Moravian-Silesian,0.0
+Central Bohemian,Małopolskie,0.0
+Central Bohemian,Śląskie,0.0
+Central Bohemian,Wielkopolskie,0.0
+Central Bohemian,Zachodniopomorskie,57.4320209483613
+Central Bohemian,Lubuskie,39.09864364074954
+Central Bohemian,Dolnośląskie,0.0
+Central Bohemian,Opolskie,0.0
+Central Bohemian,Kujawsko-Pomorskie,34.43866965488529
+Central Bohemian,Warmińsko-Mazurskie,47.650375275652195
+Central Bohemian,Pomorskie,30.268172942254495
+Central Bohemian,Łódzkie,0.0
+Central Bohemian,Świętokrzyskie,0.0
+Central Bohemian,Lubelskie,29.779705559344162
+Central Bohemian,Podkarpackie,0.0
+Central Bohemian,Podlaskie,43.882408145910176
+Central Bohemian,Mazowieckie,0.0
+South Bohemian,Prague,0.0
+South Bohemian,Central Bohemian,29.38663353918495
+South Bohemian,South Bohemian,200.0
+South Bohemian,Plzeň,29.39841493436025
+South Bohemian,Karlovy Vary,0.0
+South Bohemian,Ústí nad Labem,45.59747247818826
+South Bohemian,Liberec,57.54344644939759
+South Bohemian,Hradec Králové,100.92530754436113
+South Bohemian,Olomouc,32.522194580748796
+South Bohemian,South Moravian,0.0
+South Bohemian,Vysočina,0.0
+South Bohemian,Pardubice,0.0
+South Bohemian,Zlín,97.76624628089897
+South Bohemian,Moravian-Silesian,0.0
+South Bohemian,Małopolskie,0.0
+South Bohemian,Śląskie,0.0
+South Bohemian,Wielkopolskie,0.0
+South Bohemian,Zachodniopomorskie,54.38986357599632
+South Bohemian,Lubuskie,45.997339262246335
+South Bohemian,Dolnośląskie,0.0
+South Bohemian,Opolskie,0.0
+South Bohemian,Kujawsko-Pomorskie,34.22334057925461
+South Bohemian,Warmińsko-Mazurskie,66.59029412175573
+South Bohemian,Pomorskie,22.749875598093645
+South Bohemian,Łódzkie,0.0
+South Bohemian,Świętokrzyskie,0.0
+South Bohemian,Lubelskie,24.199059432709266
+South Bohemian,Podkarpackie,0.0
+South Bohemian,Podlaskie,0.0
+South Bohemian,Mazowieckie,0.0
+Plzeň,Prague,0.0
+Plzeň,Central Bohemian,0.0
+Plzeň,South Bohemian,29.39841493436025
+Plzeň,Plzeň,200.0
+Plzeň,Karlovy Vary,0.0
+Plzeň,Ústí nad Labem,0.0
+Plzeň,Liberec,0.0
+Plzeň,Hradec Králové,43.22500816285527
+Plzeň,Olomouc,36.744067630190905
+Plzeň,South Moravian,0.0
+Plzeň,Vysočina,23.534164817630824
+Plzeň,Pardubice,21.262627406066613
+Plzeň,Zlín,33.31700055464466
+Plzeň,Moravian-Silesian,0.0
+Plzeň,Małopolskie,0.0
+Plzeň,Śląskie,0.0
+Plzeň,Wielkopolskie,0.0
+Plzeň,Zachodniopomorskie,0.0
+Plzeň,Lubuskie,0.0
+Plzeň,Dolnośląskie,0.0
+Plzeň,Opolskie,0.0
+Plzeň,Kujawsko-Pomorskie,0.0
+Plzeň,Warmińsko-Mazurskie,0.0
+Plzeň,Pomorskie,0.0
+Plzeň,Łódzkie,0.0
+Plzeň,Świętokrzyskie,0.0
+Plzeň,Lubelskie,0.0
+Plzeň,Podkarpackie,0.0
+Plzeň,Podlaskie,0.0
+Plzeň,Mazowieckie,0.0
+Karlovy Vary,Prague,0.0
+Karlovy Vary,Central Bohemian,0.0
+Karlovy Vary,South Bohemian,0.0
+Karlovy Vary,Plzeň,0.0
+Karlovy Vary,Karlovy Vary,200.0
+Karlovy Vary,Ústí nad Labem,0.0
+Karlovy Vary,Liberec,0.0
+Karlovy Vary,Hradec Králové,0.0
+Karlovy Vary,Olomouc,0.0
+Karlovy Vary,South Moravian,0.0
+Karlovy Vary,Vysočina,0.0
+Karlovy Vary,Pardubice,0.0
+Karlovy Vary,Zlín,0.0
+Karlovy Vary,Moravian-Silesian,0.0
+Karlovy Vary,Małopolskie,0.0
+Karlovy Vary,Śląskie,0.0
+Karlovy Vary,Wielkopolskie,0.0
+Karlovy Vary,Zachodniopomorskie,0.0
+Karlovy Vary,Lubuskie,0.0
+Karlovy Vary,Dolnośląskie,0.0
+Karlovy Vary,Opolskie,0.0
+Karlovy Vary,Kujawsko-Pomorskie,0.0
+Karlovy Vary,Warmińsko-Mazurskie,0.0
+Karlovy Vary,Pomorskie,0.0
+Karlovy Vary,Łódzkie,0.0
+Karlovy Vary,Świętokrzyskie,0.0
+Karlovy Vary,Lubelskie,0.0
+Karlovy Vary,Podkarpackie,0.0
+Karlovy Vary,Podlaskie,0.0
+Karlovy Vary,Mazowieckie,0.0
+Ústí nad Labem,Prague,0.0
+Ústí nad Labem,Central Bohemian,22.81711294571755
+Ústí nad Labem,South Bohemian,45.59747247818826
+Ústí nad Labem,Plzeň,0.0
+Ústí nad Labem,Karlovy Vary,0.0
+Ústí nad Labem,Ústí nad Labem,200.0
+Ústí nad Labem,Liberec,20.27386125553036
+Ústí nad Labem,Hradec Králové,34.83325208441813
+Ústí nad Labem,Olomouc,0.0
+Ústí nad Labem,South Moravian,22.189498113702182
+Ústí nad Labem,Vysočina,0.0
+Ústí nad Labem,Pardubice,0.0
+Ústí nad Labem,Zlín,28.472722298675635
+Ústí nad Labem,Moravian-Silesian,0.0
+Ústí nad Labem,Małopolskie,0.0
+Ústí nad Labem,Śląskie,0.0
+Ústí nad Labem,Wielkopolskie,0.0
+Ústí nad Labem,Zachodniopomorskie,43.03435108552408
+Ústí nad Labem,Lubuskie,50.86795582749997
+Ústí nad Labem,Dolnośląskie,0.0
+Ústí nad Labem,Opolskie,0.0
+Ústí nad Labem,Kujawsko-Pomorskie,0.0
+Ústí nad Labem,Warmińsko-Mazurskie,37.65651984143691
+Ústí nad Labem,Pomorskie,0.0
+Ústí nad Labem,Łódzkie,0.0
+Ústí nad Labem,Świętokrzyskie,0.0
+Ústí nad Labem,Lubelskie,0.0
+Ústí nad Labem,Podkarpackie,0.0
+Ústí nad Labem,Podlaskie,0.0
+Ústí nad Labem,Mazowieckie,0.0
+Liberec,Prague,0.0
+Liberec,Central Bohemian,21.264317903828797
+Liberec,South Bohemian,57.54344644939759
+Liberec,Plzeň,0.0
+Liberec,Karlovy Vary,0.0
+Liberec,Ústí nad Labem,20.27386125553036
+Liberec,Liberec,200.0
+Liberec,Hradec Králové,54.33183784737502
+Liberec,Olomouc,0.0
+Liberec,South Moravian,0.0
+Liberec,Vysočina,0.0
+Liberec,Pardubice,0.0
+Liberec,Zlín,54.460018622728455
+Liberec,Moravian-Silesian,0.0
+Liberec,Małopolskie,0.0
+Liberec,Śląskie,0.0
+Liberec,Wielkopolskie,0.0
+Liberec,Zachodniopomorskie,33.84573252091651
+Liberec,Lubuskie,30.26186951288143
+Liberec,Dolnośląskie,0.0
+Liberec,Opolskie,0.0
+Liberec,Kujawsko-Pomorskie,0.0
+Liberec,Warmińsko-Mazurskie,55.60980027623371
+Liberec,Pomorskie,0.0
+Liberec,Łódzkie,0.0
+Liberec,Świętokrzyskie,0.0
+Liberec,Lubelskie,20.768873122386665
+Liberec,Podkarpackie,0.0
+Liberec,Podlaskie,0.0
+Liberec,Mazowieckie,0.0
+Hradec Králové,Prague,0.0
+Hradec Králové,Central Bohemian,21.795623941225404
+Hradec Králové,South Bohemian,100.92530754436113
+Hradec Králové,Plzeň,43.22500816285527
+Hradec Králové,Karlovy Vary,0.0
+Hradec Králové,Ústí nad Labem,34.83325208441813
+Hradec Králové,Liberec,54.33183784737502
+Hradec Králové,Hradec Králové,200.0
+Hradec Králové,Olomouc,26.78722799550001
+Hradec Králové,South Moravian,0.0
+Hradec Králové,Vysočina,24.34679679235273
+Hradec Králové,Pardubice,30.86976579975664
+Hradec Králové,Zlín,86.3583343147161
+Hradec Králové,Moravian-Silesian,0.0
+Hradec Králové,Małopolskie,0.0
+Hradec Králové,Śląskie,0.0
+Hradec Králové,Wielkopolskie,0.0
+Hradec Králové,Zachodniopomorskie,36.47110113273374
+Hradec Králové,Lubuskie,34.5444066486523
+Hradec Králové,Dolnośląskie,0.0
+Hradec Králové,Opolskie,0.0
+Hradec Králové,Kujawsko-Pomorskie,22.502720683110976
+Hradec Králové,Warmińsko-Mazurskie,47.82967365000121
+Hradec Králové,Pomorskie,0.0
+Hradec Králové,Łódzkie,0.0
+Hradec Králové,Świętokrzyskie,0.0
+Hradec Králové,Lubelskie,0.0
+Hradec Králové,Podkarpackie,0.0
+Hradec Králové,Podlaskie,0.0
+Hradec Králové,Mazowieckie,0.0
+Olomouc,Prague,0.0
+Olomouc,Central Bohemian,0.0
+Olomouc,South Bohemian,32.522194580748796
+Olomouc,Plzeň,36.744067630190905
+Olomouc,Karlovy Vary,0.0
+Olomouc,Ústí nad Labem,0.0
+Olomouc,Liberec,0.0
+Olomouc,Hradec Králové,26.78722799550001
+Olomouc,Olomouc,200.0
+Olomouc,South Moravian,0.0
+Olomouc,Vysočina,0.0
+Olomouc,Pardubice,0.0
+Olomouc,Zlín,0.0
+Olomouc,Moravian-Silesian,0.0
+Olomouc,Małopolskie,0.0
+Olomouc,Śląskie,0.0
+Olomouc,Wielkopolskie,0.0
+Olomouc,Zachodniopomorskie,0.0
+Olomouc,Lubuskie,0.0
+Olomouc,Dolnośląskie,0.0
+Olomouc,Opolskie,0.0
+Olomouc,Kujawsko-Pomorskie,0.0
+Olomouc,Warmińsko-Mazurskie,0.0
+Olomouc,Pomorskie,0.0
+Olomouc,Łódzkie,0.0
+Olomouc,Świętokrzyskie,0.0
+Olomouc,Lubelskie,0.0
+Olomouc,Podkarpackie,0.0
+Olomouc,Podlaskie,0.0
+Olomouc,Mazowieckie,0.0
+South Moravian,Prague,0.0
+South Moravian,Central Bohemian,53.03578556210744
+South Moravian,South Bohemian,0.0
+South Moravian,Plzeň,0.0
+South Moravian,Karlovy Vary,0.0
+South Moravian,Ústí nad Labem,22.189498113702182
+South Moravian,Liberec,0.0
+South Moravian,Hradec Králové,0.0
+South Moravian,Olomouc,0.0
+South Moravian,South Moravian,200.0
+South Moravian,Vysočina,0.0
+South Moravian,Pardubice,0.0
+South Moravian,Zlín,0.0
+South Moravian,Moravian-Silesian,0.0
+South Moravian,Małopolskie,0.0
+South Moravian,Śląskie,0.0
+South Moravian,Wielkopolskie,0.0
+South Moravian,Zachodniopomorskie,38.97331475765011
+South Moravian,Lubuskie,41.05904198094456
+South Moravian,Dolnośląskie,0.0
+South Moravian,Opolskie,0.0
+South Moravian,Kujawsko-Pomorskie,20.253857011960545
+South Moravian,Warmińsko-Mazurskie,42.02528587765999
+South Moravian,Pomorskie,24.023926832972307
+South Moravian,Łódzkie,0.0
+South Moravian,Świętokrzyskie,30.591283467605074
+South Moravian,Lubelskie,23.200672715596244
+South Moravian,Podkarpackie,0.0
+South Moravian,Podlaskie,52.506070370767
+South Moravian,Mazowieckie,0.0
+Vysočina,Prague,0.0
+Vysočina,Central Bohemian,0.0
+Vysočina,South Bohemian,0.0
+Vysočina,Plzeň,23.534164817630824
+Vysočina,Karlovy Vary,0.0
+Vysočina,Ústí nad Labem,0.0
+Vysočina,Liberec,0.0
+Vysočina,Hradec Králové,24.34679679235273
+Vysočina,Olomouc,0.0
+Vysočina,South Moravian,0.0
+Vysočina,Vysočina,200.0
+Vysočina,Pardubice,38.04871111140628
+Vysočina,Zlín,0.0
+Vysočina,Moravian-Silesian,0.0
+Vysočina,Małopolskie,0.0
+Vysočina,Śląskie,0.0
+Vysočina,Wielkopolskie,0.0
+Vysočina,Zachodniopomorskie,0.0
+Vysočina,Lubuskie,0.0
+Vysočina,Dolnośląskie,0.0
+Vysočina,Opolskie,0.0
+Vysočina,Kujawsko-Pomorskie,0.0
+Vysočina,Warmińsko-Mazurskie,0.0
+Vysočina,Pomorskie,0.0
+Vysočina,Łódzkie,0.0
+Vysočina,Świętokrzyskie,0.0
+Vysočina,Lubelskie,0.0
+Vysočina,Podkarpackie,0.0
+Vysočina,Podlaskie,0.0
+Vysočina,Mazowieckie,0.0
+Pardubice,Prague,0.0
+Pardubice,Central Bohemian,0.0
+Pardubice,South Bohemian,0.0
+Pardubice,Plzeň,21.262627406066613
+Pardubice,Karlovy Vary,0.0
+Pardubice,Ústí nad Labem,0.0
+Pardubice,Liberec,0.0
+Pardubice,Hradec Králové,30.86976579975664
+Pardubice,Olomouc,0.0
+Pardubice,South Moravian,0.0
+Pardubice,Vysočina,38.04871111140628
+Pardubice,Pardubice,200.0
+Pardubice,Zlín,43.439739209947795
+Pardubice,Moravian-Silesian,0.0
+Pardubice,Małopolskie,0.0
+Pardubice,Śląskie,0.0
+Pardubice,Wielkopolskie,0.0
+Pardubice,Zachodniopomorskie,0.0
+Pardubice,Lubuskie,0.0
+Pardubice,Dolnośląskie,0.0
+Pardubice,Opolskie,0.0
+Pardubice,Kujawsko-Pomorskie,0.0
+Pardubice,Warmińsko-Mazurskie,0.0
+Pardubice,Pomorskie,0.0
+Pardubice,Łódzkie,0.0
+Pardubice,Świętokrzyskie,0.0
+Pardubice,Lubelskie,0.0
+Pardubice,Podkarpackie,0.0
+Pardubice,Podlaskie,0.0
+Pardubice,Mazowieckie,0.0
+Zlín,Prague,0.0
+Zlín,Central Bohemian,23.497505245930235
+Zlín,South Bohemian,97.76624628089897
+Zlín,Plzeň,33.31700055464466
+Zlín,Karlovy Vary,0.0
+Zlín,Ústí nad Labem,28.472722298675635
+Zlín,Liberec,54.460018622728455
+Zlín,Hradec Králové,86.3583343147161
+Zlín,Olomouc,0.0
+Zlín,South Moravian,0.0
+Zlín,Vysočina,0.0
+Zlín,Pardubice,43.439739209947795
+Zlín,Zlín,200.0
+Zlín,Moravian-Silesian,0.0
+Zlín,Małopolskie,0.0
+Zlín,Śląskie,0.0
+Zlín,Wielkopolskie,0.0
+Zlín,Zachodniopomorskie,39.26352599092713
+Zlín,Lubuskie,34.923056038437906
+Zlín,Dolnośląskie,0.0
+Zlín,Opolskie,0.0
+Zlín,Kujawsko-Pomorskie,23.025416728094147
+Zlín,Warmińsko-Mazurskie,54.00482991635015
+Zlín,Pomorskie,0.0
+Zlín,Łódzkie,0.0
+Zlín,Świętokrzyskie,0.0
+Zlín,Lubelskie,0.0
+Zlín,Podkarpackie,0.0
+Zlín,Podlaskie,0.0
+Zlín,Mazowieckie,0.0
+Moravian-Silesian,Prague,0.0
+Moravian-Silesian,Central Bohemian,0.0
+Moravian-Silesian,South Bohemian,0.0
+Moravian-Silesian,Plzeň,0.0
+Moravian-Silesian,Karlovy Vary,0.0
+Moravian-Silesian,Ústí nad Labem,0.0
+Moravian-Silesian,Liberec,0.0
+Moravian-Silesian,Hradec Králové,0.0
+Moravian-Silesian,Olomouc,0.0
+Moravian-Silesian,South Moravian,0.0
+Moravian-Silesian,Vysočina,0.0
+Moravian-Silesian,Pardubice,0.0
+Moravian-Silesian,Zlín,0.0
+Moravian-Silesian,Moravian-Silesian,200.0
+Moravian-Silesian,Małopolskie,0.0
+Moravian-Silesian,Śląskie,0.0
+Moravian-Silesian,Wielkopolskie,0.0
+Moravian-Silesian,Zachodniopomorskie,0.0
+Moravian-Silesian,Lubuskie,0.0
+Moravian-Silesian,Dolnośląskie,0.0
+Moravian-Silesian,Opolskie,0.0
+Moravian-Silesian,Kujawsko-Pomorskie,0.0
+Moravian-Silesian,Warmińsko-Mazurskie,0.0
+Moravian-Silesian,Pomorskie,0.0
+Moravian-Silesian,Łódzkie,0.0
+Moravian-Silesian,Świętokrzyskie,0.0
+Moravian-Silesian,Lubelskie,0.0
+Moravian-Silesian,Podkarpackie,0.0
+Moravian-Silesian,Podlaskie,0.0
+Moravian-Silesian,Mazowieckie,0.0
+Małopolskie,Prague,0.0
+Małopolskie,Central Bohemian,0.0
+Małopolskie,South Bohemian,0.0
+Małopolskie,Plzeň,0.0
+Małopolskie,Karlovy Vary,0.0
+Małopolskie,Ústí nad Labem,0.0
+Małopolskie,Liberec,0.0
+Małopolskie,Hradec Králové,0.0
+Małopolskie,Olomouc,0.0
+Małopolskie,South Moravian,0.0
+Małopolskie,Vysočina,0.0
+Małopolskie,Pardubice,0.0
+Małopolskie,Zlín,0.0
+Małopolskie,Moravian-Silesian,0.0
+Małopolskie,Małopolskie,200.0
+Małopolskie,Śląskie,0.0
+Małopolskie,Wielkopolskie,0.0
+Małopolskie,Zachodniopomorskie,0.0
+Małopolskie,Lubuskie,0.0
+Małopolskie,Dolnośląskie,0.0
+Małopolskie,Opolskie,0.0
+Małopolskie,Kujawsko-Pomorskie,0.0
+Małopolskie,Warmińsko-Mazurskie,0.0
+Małopolskie,Pomorskie,0.0
+Małopolskie,Łódzkie,0.0
+Małopolskie,Świętokrzyskie,0.0
+Małopolskie,Lubelskie,0.0
+Małopolskie,Podkarpackie,0.0
+Małopolskie,Podlaskie,0.0
+Małopolskie,Mazowieckie,0.0
+Śląskie,Prague,0.0
+Śląskie,Central Bohemian,0.0
+Śląskie,South Bohemian,0.0
+Śląskie,Plzeň,0.0
+Śląskie,Karlovy Vary,0.0
+Śląskie,Ústí nad Labem,0.0
+Śląskie,Liberec,0.0
+Śląskie,Hradec Králové,0.0
+Śląskie,Olomouc,0.0
+Śląskie,South Moravian,0.0
+Śląskie,Vysočina,0.0
+Śląskie,Pardubice,0.0
+Śląskie,Zlín,0.0
+Śląskie,Moravian-Silesian,0.0
+Śląskie,Małopolskie,0.0
+Śląskie,Śląskie,200.0
+Śląskie,Wielkopolskie,0.0
+Śląskie,Zachodniopomorskie,0.0
+Śląskie,Lubuskie,0.0
+Śląskie,Dolnośląskie,0.0
+Śląskie,Opolskie,0.0
+Śląskie,Kujawsko-Pomorskie,0.0
+Śląskie,Warmińsko-Mazurskie,0.0
+Śląskie,Pomorskie,0.0
+Śląskie,Łódzkie,0.0
+Śląskie,Świętokrzyskie,0.0
+Śląskie,Lubelskie,0.0
+Śląskie,Podkarpackie,0.0
+Śląskie,Podlaskie,0.0
+Śląskie,Mazowieckie,0.0
+Wielkopolskie,Prague,0.0
+Wielkopolskie,Central Bohemian,0.0
+Wielkopolskie,South Bohemian,0.0
+Wielkopolskie,Plzeň,0.0
+Wielkopolskie,Karlovy Vary,0.0
+Wielkopolskie,Ústí nad Labem,0.0
+Wielkopolskie,Liberec,0.0
+Wielkopolskie,Hradec Králové,0.0
+Wielkopolskie,Olomouc,0.0
+Wielkopolskie,South Moravian,0.0
+Wielkopolskie,Vysočina,0.0
+Wielkopolskie,Pardubice,0.0
+Wielkopolskie,Zlín,0.0
+Wielkopolskie,Moravian-Silesian,0.0
+Wielkopolskie,Małopolskie,0.0
+Wielkopolskie,Śląskie,0.0
+Wielkopolskie,Wielkopolskie,200.0
+Wielkopolskie,Zachodniopomorskie,0.0
+Wielkopolskie,Lubuskie,0.0
+Wielkopolskie,Dolnośląskie,0.0
+Wielkopolskie,Opolskie,0.0
+Wielkopolskie,Kujawsko-Pomorskie,0.0
+Wielkopolskie,Warmińsko-Mazurskie,0.0
+Wielkopolskie,Pomorskie,0.0
+Wielkopolskie,Łódzkie,0.0
+Wielkopolskie,Świętokrzyskie,0.0
+Wielkopolskie,Lubelskie,0.0
+Wielkopolskie,Podkarpackie,0.0
+Wielkopolskie,Podlaskie,0.0
+Wielkopolskie,Mazowieckie,0.0
+Zachodniopomorskie,Prague,0.0
+Zachodniopomorskie,Central Bohemian,57.4320209483613
+Zachodniopomorskie,South Bohemian,54.38986357599632
+Zachodniopomorskie,Plzeň,0.0
+Zachodniopomorskie,Karlovy Vary,0.0
+Zachodniopomorskie,Ústí nad Labem,43.03435108552408
+Zachodniopomorskie,Liberec,33.84573252091651
+Zachodniopomorskie,Hradec Králové,36.47110113273374
+Zachodniopomorskie,Olomouc,0.0
+Zachodniopomorskie,South Moravian,38.97331475765011
+Zachodniopomorskie,Vysočina,0.0
+Zachodniopomorskie,Pardubice,0.0
+Zachodniopomorskie,Zlín,39.26352599092713
+Zachodniopomorskie,Moravian-Silesian,0.0
+Zachodniopomorskie,Małopolskie,0.0
+Zachodniopomorskie,Śląskie,0.0
+Zachodniopomorskie,Wielkopolskie,0.0
+Zachodniopomorskie,Zachodniopomorskie,200.0
+Zachodniopomorskie,Lubuskie,67.58695440890628
+Zachodniopomorskie,Dolnośląskie,0.0
+Zachodniopomorskie,Opolskie,0.0
+Zachodniopomorskie,Kujawsko-Pomorskie,46.79134288819065
+Zachodniopomorskie,Warmińsko-Mazurskie,74.88620020949773
+Zachodniopomorskie,Pomorskie,48.99675547013116
+Zachodniopomorskie,Łódzkie,0.0
+Zachodniopomorskie,Świętokrzyskie,0.0
+Zachodniopomorskie,Lubelskie,47.03709090359896
+Zachodniopomorskie,Podkarpackie,0.0
+Zachodniopomorskie,Podlaskie,26.29616720432156
+Zachodniopomorskie,Mazowieckie,0.0
+Lubuskie,Prague,0.0
+Lubuskie,Central Bohemian,39.09864364074954
+Lubuskie,South Bohemian,45.997339262246335
+Lubuskie,Plzeň,0.0
+Lubuskie,Karlovy Vary,0.0
+Lubuskie,Ústí nad Labem,50.86795582749997
+Lubuskie,Liberec,30.26186951288143
+Lubuskie,Hradec Králové,34.5444066486523
+Lubuskie,Olomouc,0.0
+Lubuskie,South Moravian,41.05904198094456
+Lubuskie,Vysočina,0.0
+Lubuskie,Pardubice,0.0
+Lubuskie,Zlín,34.923056038437906
+Lubuskie,Moravian-Silesian,0.0
+Lubuskie,Małopolskie,0.0
+Lubuskie,Śląskie,0.0
+Lubuskie,Wielkopolskie,0.0
+Lubuskie,Zachodniopomorskie,67.58695440890628
+Lubuskie,Lubuskie,200.0
+Lubuskie,Dolnośląskie,0.0
+Lubuskie,Opolskie,0.0
+Lubuskie,Kujawsko-Pomorskie,30.005436256399882
+Lubuskie,Warmińsko-Mazurskie,69.90769987383626
+Lubuskie,Pomorskie,30.05540828991694
+Lubuskie,Łódzkie,0.0
+Lubuskie,Świętokrzyskie,0.0
+Lubuskie,Lubelskie,29.635058183389123
+Lubuskie,Podkarpackie,0.0
+Lubuskie,Podlaskie,32.937284010307664
+Lubuskie,Mazowieckie,0.0
+Dolnośląskie,Prague,0.0
+Dolnośląskie,Central Bohemian,0.0
+Dolnośląskie,South Bohemian,0.0
+Dolnośląskie,Plzeň,0.0
+Dolnośląskie,Karlovy Vary,0.0
+Dolnośląskie,Ústí nad Labem,0.0
+Dolnośląskie,Liberec,0.0
+Dolnośląskie,Hradec Králové,0.0
+Dolnośląskie,Olomouc,0.0
+Dolnośląskie,South Moravian,0.0
+Dolnośląskie,Vysočina,0.0
+Dolnośląskie,Pardubice,0.0
+Dolnośląskie,Zlín,0.0
+Dolnośląskie,Moravian-Silesian,0.0
+Dolnośląskie,Małopolskie,0.0
+Dolnośląskie,Śląskie,0.0
+Dolnośląskie,Wielkopolskie,0.0
+Dolnośląskie,Zachodniopomorskie,0.0
+Dolnośląskie,Lubuskie,0.0
+Dolnośląskie,Dolnośląskie,200.0
+Dolnośląskie,Opolskie,0.0
+Dolnośląskie,Kujawsko-Pomorskie,0.0
+Dolnośląskie,Warmińsko-Mazurskie,0.0
+Dolnośląskie,Pomorskie,0.0
+Dolnośląskie,Łódzkie,0.0
+Dolnośląskie,Świętokrzyskie,0.0
+Dolnośląskie,Lubelskie,0.0
+Dolnośląskie,Podkarpackie,0.0
+Dolnośląskie,Podlaskie,0.0
+Dolnośląskie,Mazowieckie,0.0
+Opolskie,Prague,0.0
+Opolskie,Central Bohemian,0.0
+Opolskie,South Bohemian,0.0
+Opolskie,Plzeň,0.0
+Opolskie,Karlovy Vary,0.0
+Opolskie,Ústí nad Labem,0.0
+Opolskie,Liberec,0.0
+Opolskie,Hradec Králové,0.0
+Opolskie,Olomouc,0.0
+Opolskie,South Moravian,0.0
+Opolskie,Vysočina,0.0
+Opolskie,Pardubice,0.0
+Opolskie,Zlín,0.0
+Opolskie,Moravian-Silesian,0.0
+Opolskie,Małopolskie,0.0
+Opolskie,Śląskie,0.0
+Opolskie,Wielkopolskie,0.0
+Opolskie,Zachodniopomorskie,0.0
+Opolskie,Lubuskie,0.0
+Opolskie,Dolnośląskie,0.0
+Opolskie,Opolskie,200.0
+Opolskie,Kujawsko-Pomorskie,0.0
+Opolskie,Warmińsko-Mazurskie,0.0
+Opolskie,Pomorskie,0.0
+Opolskie,Łódzkie,0.0
+Opolskie,Świętokrzyskie,0.0
+Opolskie,Lubelskie,0.0
+Opolskie,Podkarpackie,0.0
+Opolskie,Podlaskie,0.0
+Opolskie,Mazowieckie,0.0
+Kujawsko-Pomorskie,Prague,0.0
+Kujawsko-Pomorskie,Central Bohemian,34.43866965488529
+Kujawsko-Pomorskie,South Bohemian,34.22334057925461
+Kujawsko-Pomorskie,Plzeň,0.0
+Kujawsko-Pomorskie,Karlovy Vary,0.0
+Kujawsko-Pomorskie,Ústí nad Labem,0.0
+Kujawsko-Pomorskie,Liberec,0.0
+Kujawsko-Pomorskie,Hradec Králové,22.502720683110976
+Kujawsko-Pomorskie,Olomouc,0.0
+Kujawsko-Pomorskie,South Moravian,20.253857011960545
+Kujawsko-Pomorskie,Vysočina,0.0
+Kujawsko-Pomorskie,Pardubice,0.0
+Kujawsko-Pomorskie,Zlín,23.025416728094147
+Kujawsko-Pomorskie,Moravian-Silesian,0.0
+Kujawsko-Pomorskie,Małopolskie,0.0
+Kujawsko-Pomorskie,Śląskie,0.0
+Kujawsko-Pomorskie,Wielkopolskie,0.0
+Kujawsko-Pomorskie,Zachodniopomorskie,46.79134288819065
+Kujawsko-Pomorskie,Lubuskie,30.005436256399882
+Kujawsko-Pomorskie,Dolnośląskie,0.0
+Kujawsko-Pomorskie,Opolskie,0.0
+Kujawsko-Pomorskie,Kujawsko-Pomorskie,200.0
+Kujawsko-Pomorskie,Warmińsko-Mazurskie,33.796634094778504
+Kujawsko-Pomorskie,Pomorskie,56.2849412207055
+Kujawsko-Pomorskie,Łódzkie,0.0
+Kujawsko-Pomorskie,Świętokrzyskie,0.0
+Kujawsko-Pomorskie,Lubelskie,59.6677264745333
+Kujawsko-Pomorskie,Podkarpackie,23.78890389829759
+Kujawsko-Pomorskie,Podlaskie,0.0
+Kujawsko-Pomorskie,Mazowieckie,0.0
+Warmińsko-Mazurskie,Prague,0.0
+Warmińsko-Mazurskie,Central Bohemian,47.650375275652195
+Warmińsko-Mazurskie,South Bohemian,66.59029412175573
+Warmińsko-Mazurskie,Plzeň,0.0
+Warmińsko-Mazurskie,Karlovy Vary,0.0
+Warmińsko-Mazurskie,Ústí nad Labem,37.65651984143691
+Warmińsko-Mazurskie,Liberec,55.60980027623371
+Warmińsko-Mazurskie,Hradec Králové,47.82967365000121
+Warmińsko-Mazurskie,Olomouc,0.0
+Warmińsko-Mazurskie,South Moravian,42.02528587765999
+Warmińsko-Mazurskie,Vysočina,0.0
+Warmińsko-Mazurskie,Pardubice,0.0
+Warmińsko-Mazurskie,Zlín,54.00482991635015
+Warmińsko-Mazurskie,Moravian-Silesian,0.0
+Warmińsko-Mazurskie,Małopolskie,0.0
+Warmińsko-Mazurskie,Śląskie,0.0
+Warmińsko-Mazurskie,Wielkopolskie,0.0
+Warmińsko-Mazurskie,Zachodniopomorskie,74.88620020949773
+Warmińsko-Mazurskie,Lubuskie,69.90769987383626
+Warmińsko-Mazurskie,Dolnośląskie,0.0
+Warmińsko-Mazurskie,Opolskie,0.0
+Warmińsko-Mazurskie,Kujawsko-Pomorskie,33.796634094778504
+Warmińsko-Mazurskie,Warmińsko-Mazurskie,200.0
+Warmińsko-Mazurskie,Pomorskie,64.70462151519163
+Warmińsko-Mazurskie,Łódzkie,0.0
+Warmińsko-Mazurskie,Świętokrzyskie,0.0
+Warmińsko-Mazurskie,Lubelskie,60.08537567559714
+Warmińsko-Mazurskie,Podkarpackie,0.0
+Warmińsko-Mazurskie,Podlaskie,25.272877523984288
+Warmińsko-Mazurskie,Mazowieckie,0.0
+Pomorskie,Prague,0.0
+Pomorskie,Central Bohemian,30.268172942254495
+Pomorskie,South Bohemian,22.749875598093645
+Pomorskie,Plzeň,0.0
+Pomorskie,Karlovy Vary,0.0
+Pomorskie,Ústí nad Labem,0.0
+Pomorskie,Liberec,0.0
+Pomorskie,Hradec Králové,0.0
+Pomorskie,Olomouc,0.0
+Pomorskie,South Moravian,24.023926832972307
+Pomorskie,Vysočina,0.0
+Pomorskie,Pardubice,0.0
+Pomorskie,Zlín,0.0
+Pomorskie,Moravian-Silesian,0.0
+Pomorskie,Małopolskie,0.0
+Pomorskie,Śląskie,0.0
+Pomorskie,Wielkopolskie,0.0
+Pomorskie,Zachodniopomorskie,48.99675547013116
+Pomorskie,Lubuskie,30.05540828991694
+Pomorskie,Dolnośląskie,0.0
+Pomorskie,Opolskie,0.0
+Pomorskie,Kujawsko-Pomorskie,56.2849412207055
+Pomorskie,Warmińsko-Mazurskie,64.70462151519163
+Pomorskie,Pomorskie,200.0
+Pomorskie,Łódzkie,0.0
+Pomorskie,Świętokrzyskie,0.0
+Pomorskie,Lubelskie,91.53609020543925
+Pomorskie,Podkarpackie,0.0
+Pomorskie,Podlaskie,0.0
+Pomorskie,Mazowieckie,0.0
+Łódzkie,Prague,0.0
+Łódzkie,Central Bohemian,0.0
+Łódzkie,South Bohemian,0.0
+Łódzkie,Plzeň,0.0
+Łódzkie,Karlovy Vary,0.0
+Łódzkie,Ústí nad Labem,0.0
+Łódzkie,Liberec,0.0
+Łódzkie,Hradec Králové,0.0
+Łódzkie,Olomouc,0.0
+Łódzkie,South Moravian,0.0
+Łódzkie,Vysočina,0.0
+Łódzkie,Pardubice,0.0
+Łódzkie,Zlín,0.0
+Łódzkie,Moravian-Silesian,0.0
+Łódzkie,Małopolskie,0.0
+Łódzkie,Śląskie,0.0
+Łódzkie,Wielkopolskie,0.0
+Łódzkie,Zachodniopomorskie,0.0
+Łódzkie,Lubuskie,0.0
+Łódzkie,Dolnośląskie,0.0
+Łódzkie,Opolskie,0.0
+Łódzkie,Kujawsko-Pomorskie,0.0
+Łódzkie,Warmińsko-Mazurskie,0.0
+Łódzkie,Pomorskie,0.0
+Łódzkie,Łódzkie,200.0
+Łódzkie,Świętokrzyskie,0.0
+Łódzkie,Lubelskie,0.0
+Łódzkie,Podkarpackie,0.0
+Łódzkie,Podlaskie,0.0
+Łódzkie,Mazowieckie,0.0
+Świętokrzyskie,Prague,0.0
+Świętokrzyskie,Central Bohemian,0.0
+Świętokrzyskie,South Bohemian,0.0
+Świętokrzyskie,Plzeň,0.0
+Świętokrzyskie,Karlovy Vary,0.0
+Świętokrzyskie,Ústí nad Labem,0.0
+Świętokrzyskie,Liberec,0.0
+Świętokrzyskie,Hradec Králové,0.0
+Świętokrzyskie,Olomouc,0.0
+Świętokrzyskie,South Moravian,30.591283467605074
+Świętokrzyskie,Vysočina,0.0
+Świętokrzyskie,Pardubice,0.0
+Świętokrzyskie,Zlín,0.0
+Świętokrzyskie,Moravian-Silesian,0.0
+Świętokrzyskie,Małopolskie,0.0
+Świętokrzyskie,Śląskie,0.0
+Świętokrzyskie,Wielkopolskie,0.0
+Świętokrzyskie,Zachodniopomorskie,0.0
+Świętokrzyskie,Lubuskie,0.0
+Świętokrzyskie,Dolnośląskie,0.0
+Świętokrzyskie,Opolskie,0.0
+Świętokrzyskie,Kujawsko-Pomorskie,0.0
+Świętokrzyskie,Warmińsko-Mazurskie,0.0
+Świętokrzyskie,Pomorskie,0.0
+Świętokrzyskie,Łódzkie,0.0
+Świętokrzyskie,Świętokrzyskie,200.0
+Świętokrzyskie,Lubelskie,0.0
+Świętokrzyskie,Podkarpackie,0.0
+Świętokrzyskie,Podlaskie,33.33244541018095
+Świętokrzyskie,Mazowieckie,0.0
+Lubelskie,Prague,0.0
+Lubelskie,Central Bohemian,29.779705559344162
+Lubelskie,South Bohemian,24.199059432709266
+Lubelskie,Plzeň,0.0
+Lubelskie,Karlovy Vary,0.0
+Lubelskie,Ústí nad Labem,0.0
+Lubelskie,Liberec,20.768873122386665
+Lubelskie,Hradec Králové,0.0
+Lubelskie,Olomouc,0.0
+Lubelskie,South Moravian,23.200672715596244
+Lubelskie,Vysočina,0.0
+Lubelskie,Pardubice,0.0
+Lubelskie,Zlín,0.0
+Lubelskie,Moravian-Silesian,0.0
+Lubelskie,Małopolskie,0.0
+Lubelskie,Śląskie,0.0
+Lubelskie,Wielkopolskie,0.0
+Lubelskie,Zachodniopomorskie,47.03709090359896
+Lubelskie,Lubuskie,29.635058183389123
+Lubelskie,Dolnośląskie,0.0
+Lubelskie,Opolskie,0.0
+Lubelskie,Kujawsko-Pomorskie,59.6677264745333
+Lubelskie,Warmińsko-Mazurskie,60.08537567559714
+Lubelskie,Pomorskie,91.53609020543925
+Lubelskie,Łódzkie,0.0
+Lubelskie,Świętokrzyskie,0.0
+Lubelskie,Lubelskie,200.0
+Lubelskie,Podkarpackie,29.86556785187977
+Lubelskie,Podlaskie,0.0
+Lubelskie,Mazowieckie,0.0
+Podkarpackie,Prague,0.0
+Podkarpackie,Central Bohemian,0.0
+Podkarpackie,South Bohemian,0.0
+Podkarpackie,Plzeň,0.0
+Podkarpackie,Karlovy Vary,0.0
+Podkarpackie,Ústí nad Labem,0.0
+Podkarpackie,Liberec,0.0
+Podkarpackie,Hradec Králové,0.0
+Podkarpackie,Olomouc,0.0
+Podkarpackie,South Moravian,0.0
+Podkarpackie,Vysočina,0.0
+Podkarpackie,Pardubice,0.0
+Podkarpackie,Zlín,0.0
+Podkarpackie,Moravian-Silesian,0.0
+Podkarpackie,Małopolskie,0.0
+Podkarpackie,Śląskie,0.0
+Podkarpackie,Wielkopolskie,0.0
+Podkarpackie,Zachodniopomorskie,0.0
+Podkarpackie,Lubuskie,0.0
+Podkarpackie,Dolnośląskie,0.0
+Podkarpackie,Opolskie,0.0
+Podkarpackie,Kujawsko-Pomorskie,23.78890389829759
+Podkarpackie,Warmińsko-Mazurskie,0.0
+Podkarpackie,Pomorskie,0.0
+Podkarpackie,Łódzkie,0.0
+Podkarpackie,Świętokrzyskie,0.0
+Podkarpackie,Lubelskie,29.86556785187977
+Podkarpackie,Podkarpackie,200.0
+Podkarpackie,Podlaskie,0.0
+Podkarpackie,Mazowieckie,0.0
+Podlaskie,Prague,0.0
+Podlaskie,Central Bohemian,43.882408145910176
+Podlaskie,South Bohemian,0.0
+Podlaskie,Plzeň,0.0
+Podlaskie,Karlovy Vary,0.0
+Podlaskie,Ústí nad Labem,0.0
+Podlaskie,Liberec,0.0
+Podlaskie,Hradec Králové,0.0
+Podlaskie,Olomouc,0.0
+Podlaskie,South Moravian,52.506070370767
+Podlaskie,Vysočina,0.0
+Podlaskie,Pardubice,0.0
+Podlaskie,Zlín,0.0
+Podlaskie,Moravian-Silesian,0.0
+Podlaskie,Małopolskie,0.0
+Podlaskie,Śląskie,0.0
+Podlaskie,Wielkopolskie,0.0
+Podlaskie,Zachodniopomorskie,26.29616720432156
+Podlaskie,Lubuskie,32.937284010307664
+Podlaskie,Dolnośląskie,0.0
+Podlaskie,Opolskie,0.0
+Podlaskie,Kujawsko-Pomorskie,0.0
+Podlaskie,Warmińsko-Mazurskie,25.272877523984288
+Podlaskie,Pomorskie,0.0
+Podlaskie,Łódzkie,0.0
+Podlaskie,Świętokrzyskie,33.33244541018095
+Podlaskie,Lubelskie,0.0
+Podlaskie,Podkarpackie,0.0
+Podlaskie,Podlaskie,200.0
+Podlaskie,Mazowieckie,0.0
+Mazowieckie,Prague,0.0
+Mazowieckie,Central Bohemian,0.0
+Mazowieckie,South Bohemian,0.0
+Mazowieckie,Plzeň,0.0
+Mazowieckie,Karlovy Vary,0.0
+Mazowieckie,Ústí nad Labem,0.0
+Mazowieckie,Liberec,0.0
+Mazowieckie,Hradec Králové,0.0
+Mazowieckie,Olomouc,0.0
+Mazowieckie,South Moravian,0.0
+Mazowieckie,Vysočina,0.0
+Mazowieckie,Pardubice,0.0
+Mazowieckie,Zlín,0.0
+Mazowieckie,Moravian-Silesian,0.0
+Mazowieckie,Małopolskie,0.0
+Mazowieckie,Śląskie,0.0
+Mazowieckie,Wielkopolskie,0.0
+Mazowieckie,Zachodniopomorskie,0.0
+Mazowieckie,Lubuskie,0.0
+Mazowieckie,Dolnośląskie,0.0
+Mazowieckie,Opolskie,0.0
+Mazowieckie,Kujawsko-Pomorskie,0.0
+Mazowieckie,Warmińsko-Mazurskie,0.0
+Mazowieckie,Pomorskie,0.0
+Mazowieckie,Łódzkie,0.0
+Mazowieckie,Świętokrzyskie,0.0
+Mazowieckie,Lubelskie,0.0
+Mazowieckie,Podkarpackie,0.0
+Mazowieckie,Podlaskie,0.0
+Mazowieckie,Mazowieckie,200.0

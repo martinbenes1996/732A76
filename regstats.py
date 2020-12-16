@@ -7,7 +7,7 @@ Created on Sat Dec  5 22:39:54 2020
 
 import math
 import numpy as np
-from scipy.stats import ttest_ind
+from scipy.stats import ttest_ind, levene, f_oneway
 import src
 
 
@@ -35,12 +35,63 @@ def outliers(feature, country = None):
 #        print(outliers(attr, country))
 #        print("")
 
+def Levene_test(pi = True, alpha = 0.95):
+    """Performs Levene's tests of attributes from regions of given countries.
+    
+    Args:
+        pi (bool, optional): If False, returns decision about H0.
+                             If True, returns both-sided pi-value.
+                             True by default
+        alpha (int, optional): Significance level, 0.95 by default.
+    """
+    # fetch region dataframe
+    regions_df = src.regions_df()
+    
+    # default values
+    attributes = ['Population','Area','Density']
+    countries = regions_df.Country.unique()
+    
+    # create dataframe
+    pi_dict = {k: [None for _ in range(len(countries)**2)] for k in attributes}
+    pi_dict = {
+        'Country1': [c for c in countries for _ in range(len(countries))],
+        'Country2': [c for _ in range(len(countries)) for c in countries],
+        **pi_dict
+    }
+    
+    # pi values dataframes
+    pi_df = pd.DataFrame(pi_dict)
+    pi_df = pi_df[pi_df.Country1 != pi_df.Country2]\
+        .reset_index(drop = True)
+    
+    for i,r in pi_df.iterrows():
+        for a in attributes:
+            # get data
+            data1 = regions_df[regions_df.Country == r.Country1][a]
+            data2 = regions_df[regions_df.Country == r.Country2][a]
+            
+            # perform the test
+            pop_pi = f_oneway(data1, data2)
+            pi_df.at[i,a] = pop_pi.pvalue
+    
+    if pi:
+        return pi_df
+    else:
+        pi_df = pd.concat([
+            pi_df[['Country1','Country2']],
+            pi_df[attributes] < (1 - alpha)/2
+        ], axis = 1, ignore_index=True)
+        pi_df.columns = ['Country1','Country2', *attributes]
+        return pi_df
+
 def Welchs_test(pi = True, alpha = 0.95):
     """Performs Welchs tests of attributes from regions of given countries.
     
     Args:
-        countries (list): List of country codes as strings.
-        attributes (list): List of attributes as strings.
+        pi (bool, optional): If False, returns decision about H0.
+                             If True, returns both-sided pi-value.
+                             True by default
+        alpha (int, optional): Significance level, 0.95 by default.
     """
     
     # fetch region dataframe
@@ -86,6 +137,11 @@ def Welchs_test(pi = True, alpha = 0.95):
 Welchs_test()
 Welchs_test(pi = False)
 
+
+regions = src.regions_df()
+regions_cz = regions[regions.Country == 'CZ']
+regions_pl = regions[regions.Country == 'PL']
+regions_se = regions[regions.Country == 'SE']
 
 # population
 # SE - PL

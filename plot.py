@@ -75,7 +75,7 @@ def location_score_heatmap(name = None, countries = None):
         regions = {k:v for k,v in src.regions().items() if k[:2].lower() in countries} 
     
     # get score
-    M,M_nuts = location.location_score_matrix(regions = regions)
+    M,M_nuts = location.location_score_matrix(regions = regions) # bug
     # get region names
     M_names = src.region_names(M_nuts)
     
@@ -90,6 +90,9 @@ def location_score_heatmap_czpl():
 
     # plot with explicit data
     location_score_heatmap(countries = {'cz','pl'})
+
+
+centroid_distance_heatmap_czpl()
     
 def location_score_heatmap_se():
     
@@ -110,7 +113,7 @@ def area_population_scatter(name = None, regions_df = None):
     
     # save
     else: plt.savefig(name)
-    
+
 def popdensity_boxplot(name = None, regions_df = None):
     
     # default data if not given
