@@ -13,12 +13,12 @@ import pandas as pd
 
 import seaborn as sns
 import matplotlib.pyplot as plt
-plt.rcParams["figure.figsize"] = (9,7)
+plt.rcParams["figure.figsize"] = (12,10)
 
 import location
 import _src
 
-def centroid_distance_heatmap(name = None, countries = None):
+def centroid_distance_heatmap(h = 100, name = None, countries = None):
     
     # get selection data only
     if countries is None:
@@ -27,7 +27,7 @@ def centroid_distance_heatmap(name = None, countries = None):
         regions = {k:v for k,v in _src.regions().items() if k[:2].lower() in countries} 
 
     # get centroid distances
-    M,M_nuts = location.centroid_distance_matrix(regions = regions)
+    M,M_nuts = location.centroid_distance_matrix(h = h, regions = regions)
     # get region names (for legend)
     M_names = _src.region_names(M_nuts)
 
@@ -38,13 +38,13 @@ def centroid_distance_heatmap(name = None, countries = None):
     # save plot
     else: plt.savefig(name)
 
-def centroid_distance_heatmap_czpl():
+def centroid_distance_heatmap_czpl(*args, **kw):
     # plot with explicit data
-    centroid_distance_heatmap(countries = {'cz','pl'})
+    centroid_distance_heatmap(*args, countries = {'cz','pl'}, **kw)
     
-def centroid_distance_heatmap_se():
+def centroid_distance_heatmap_se(*args, **kw):
     # plot with explicit data
-    centroid_distance_heatmap(countries = {'se'})
+    centroid_distance_heatmap(*args, countries = {'se'}, **kw)
 
 def adjacency_matrix(name = None, countries = None):
     
@@ -107,7 +107,7 @@ def adjacency_heatmap_se():
     # plot with explicit data
     adjacency_heatmap(countries = {'se'})
 
-def location_score_heatmap(name = None, countries = None):
+def location_score_heatmap(h = 100, name = None, countries = None):
     
     # get selection data only
     if countries is None:
@@ -116,7 +116,7 @@ def location_score_heatmap(name = None, countries = None):
         regions = {k:v for k,v in _src.regions().items() if k[:2].lower() in countries} 
     
     # get score
-    M,M_nuts = location.location_score_matrix(regions = regions) # bug
+    M,M_nuts = location.location_score_matrix(h = h, regions = regions) # bug
     # get region names
     M_names = _src.region_names(M_nuts)
     
@@ -127,15 +127,15 @@ def location_score_heatmap(name = None, countries = None):
     # save plot
     else: plt.savefig(name)
 
-def location_score_heatmap_czpl():
+def location_score_heatmap_czpl(h = 100):
 
     # plot with explicit data
-    location_score_heatmap(countries = {'cz','pl'})
+    location_score_heatmap(h = h, countries = {'cz','pl'})
     
-def location_score_heatmap_se():
+def location_score_heatmap_se(h = 100):
     
     # plot with explicit data
-    location_score_heatmap(countries = {'se'})
+    location_score_heatmap(h = h, countries = {'se'})
 
 def area_population_scatter(name = None, regions_df = None):
     
@@ -177,6 +177,4 @@ def popdensity_boxplot_noPRG(name = None, regions_df = None):
     
     # plot
     popdensity_boxplot(name = name, regions_df = regions_df)
-
-adjacency_matrix_czpl()
-#popdensity_boxplot_noPRG()
+    

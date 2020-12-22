@@ -135,14 +135,13 @@ def plot_map(assets, regions, colors = {}, font_size = 15):
     ax.set_ylim(miny - y_over, maxy + y_over)
     plt.show()
 
-
 def CZ_PL_map():
     """Constructs map of Czechia and Poland."""
     plot_map(
         ['CZ', 'CZE', 'PL', 'POL'],
         [r'CZ[0-9]{0,3}$', r'PL$', r'PL9$', r'PL[^9][0-9]{0,1}$'],
         colors = {'CZ': (1,.91,.51), 'PL': (1,.99,.78)},
-        font_size = 20
+        font_size = 35
     )
 
 def SE_map():
@@ -151,8 +150,5 @@ def SE_map():
         ['SE', 'SWE'],
         [r'SE[0-9]*'],
         colors = {'SE': (.96,.835,.28)},
-        font_size = 12
+        font_size = 15
     )
-    
-CZ_PL_map()
-SE_map()

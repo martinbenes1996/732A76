@@ -65,7 +65,7 @@ def adjacency_similarity_matrix(neighbors = None):
     # return
     return D_adjacent_,region_nuts
 
-def centroid_distance_matrix(regions = None):
+def centroid_distance_matrix(h = 100, regions = None):
     
     # default data
     regions = regions if regions is not None else _src.regions()
@@ -76,7 +76,7 @@ def centroid_distance_matrix(regions = None):
     # distance matrix
     D_centroid = cdist(centroids, centroids, metric = tools.great_circle)
     # Gaussian kernel (distance -> similarity matrix)
-    K_centroid = tools.rbf(D_centroid, h = 100)
+    K_centroid = tools.rbf(D_centroid, h = h)
     # scale inverted (similarity -> distance matrix)
     K_centroid = minmax_scale(-K_centroid)
     # seriate
@@ -90,7 +90,7 @@ def centroid_distance_matrix(regions = None):
     # return
     return K_centroid_,region_nuts
     
-def location_score_matrix(regions = None):
+def location_score_matrix(h = 100, regions = None):
     
     # default data
     regions = regions if regions is not None else _src.regions()
@@ -99,7 +99,7 @@ def location_score_matrix(regions = None):
     neighbors = {k:v for k,v in _src.neighbors().items() if k in regions}
     
     # construct matrices
-    M_ctr,ctr_nuts = centroid_distance_matrix(regions = regions)
+    M_ctr,ctr_nuts = centroid_distance_matrix(h = h, regions = regions)
     M_adj,adj_nuts = adjacency_similarity_matrix(neighbors = neighbors)
     
     # reorder to have same order
