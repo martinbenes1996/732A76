@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat Dec  5 21:12:36 2020
+Module to generate regional location statistics of regions.
 
-@author: martin benes
+@author: Martin Benes
 """
+
+import sys
+sys.path.append("src")
 
 import csv
 import numpy as np
@@ -11,13 +14,36 @@ from scipy.spatial.distance import cdist, correlation
 from seriate import seriate
 from sklearn.preprocessing import minmax_scale
 
-import src
+import _src
 import tools
 
 def adjacency_matrix(neighbors = None):
     
     # default data
-    neighbors = neighbors if neighbors is not None else src.neighbors()
+    neighbors = neighbors if neighbors is not None else _src.neighbors()
+    
+    # compute adjacency
+    regIdx = {n: i for i,n in enumerate(neighbors)}
+    adjacent = np.zeros((len(neighbors),len(neighbors)))
+    for k1,n in neighbors.items():
+        for k2 in n:
+            adjacent[regIdx[k1],regIdx[k2]] = 1
+    
+    # seriate
+    D_order = seriate(adjacent)
+    adjacent_ = adjacent[:,D_order]
+    adjacent_ = adjacent_[D_order,:]
+    
+    # region labels
+    region_nuts = np.array(list(neighbors.keys()))[D_order]
+    
+    # return
+    return adjacent_,region_nuts
+
+def adjacency_similarity_matrix(neighbors = None):
+    
+    # default data
+    neighbors = neighbors if neighbors is not None else _src.neighbors()
     
     # compute adjacency
     regIdx = {n: i for i,n in enumerate(neighbors)}
@@ -42,7 +68,7 @@ def adjacency_matrix(neighbors = None):
 def centroid_distance_matrix(regions = None):
     
     # default data
-    regions = regions if regions is not None else src.regions()
+    regions = regions if regions is not None else _src.regions()
     
     # parse centroids
     centroids = [list(map(float, r['centroid'].split(','))) for r in regions.values()]
@@ -67,14 +93,14 @@ def centroid_distance_matrix(regions = None):
 def location_score_matrix(regions = None):
     
     # default data
-    regions = regions if regions is not None else src.regions()
+    regions = regions if regions is not None else _src.regions()
     
     # get neighbors
-    neighbors = {k:v for k,v in src.neighbors().items() if k in regions}
+    neighbors = {k:v for k,v in _src.neighbors().items() if k in regions}
     
     # construct matrices
     M_ctr,ctr_nuts = centroid_distance_matrix(regions = regions)
-    M_adj,adj_nuts = adjacency_matrix(neighbors = neighbors)
+    M_adj,adj_nuts = adjacency_similarity_matrix(neighbors = neighbors)
     
     # reorder to have same order
     adj_reorder = [i for c in ctr_nuts for i,a in enumerate(adj_nuts) if a == c]
@@ -96,4 +122,3 @@ def location_score_matrix(regions = None):
     # return
     return neighbors_weighted_,neighbors_nuts
 
-location_score_matrix()

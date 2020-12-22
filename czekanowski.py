@@ -6,109 +6,140 @@ Created on Tue Dec 15 08:33:52 2020
 """
 
 import numpy as np
-from ortools.constraint_solver import pywrapcp,routing_enums_pb2
+from numpy.random import permutation
 import pandas as pd
-from scipy.spatial.distance import cdist, euclidean
-from seriate import seriate
+
+import logging
+LOG = logging.getLogger(__name__)
 
 import seaborn as sns
 import matplotlib.pyplot as plt
 plt.rcParams["figure.figsize"] = (9,7)
 plt.rcParams['font.size'] = 7
 
-import src
-from tools import great_circle
+import ga
+import ovfw
 
-# brute force
-def _czekanowski_brute_seriate(D):
-    
-    def Um(M):
-        v,D = [],[]
-        for i in range(M.shape[0]):
-            for j in range(i+1, M.shape[1]):
-                v.append(M[i,j])
-                D.append(abs(i - j))
-        v,D = np.array(v),np.array(D, dtype = int)
-        return 2/v.shape[0]**2 * np.sum(D**2/(v + 1))
-    def obj(M):
-        def _obj(p):
-            p_ = np.array(p, dtype = int)
-            # change the order
-            Mp_ = M[p_,:]
-            Mp = Mp_[:,p_]
-            # objective
-            return Um(Mp)
-        return _obj
-    
-    # initialize
-    k = D.shape[0]
-    best = (None, None)
-    objective = obj(D)
-    
-    # all permutations
-    from sympy.utilities.iterables import multiset_permutations
-    for p in multiset_permutations([i for i in range(k)]):
-        
-        # compute objective
-        o = objective(p)
-        
-        # take lesser
-        if best[0] is None or best[0] > o:
-            best = (o,p)
-    return p
+def Um(M):
+    v,D = [],[]
+    for i in range(M.shape[0]):
+        for j in range(i+1, M.shape[1]):
+            v.append(M[i,j])
+            D.append(abs(i - j))
+    v,D = np.array(v),np.array(D, dtype = int)
+    return 2/v.shape[0]**2 * np.sum(D**2/(v + 1))
+def obj(M):
+    def _obj(p):
+        p_ = np.array(p, dtype = int)
+        # change the order
+        Mp_ = M[p_,:]
+        Mp = Mp_[:,p_]
+        # objective
+        return Um(Mp)
+    return _obj
 
-def _czekanowski_tsp_seriate(D, initial_order = None):
-    k = D.shape[0]
-    
-    manager = pywrapcp.RoutingIndexManager(k + 1, 1, k)
-    routing = pywrapcp.RoutingModel(manager)
-    
-    # distance callback
-    def distance_callback(from_index, to_index):
-        """Returns the distance between the two nodes."""
-        # Convert from routing variable Index to distance matrix NodeIndex.
-        from_node = manager.IndexToNode(from_index)
-        to_node = manager.IndexToNode(to_index)
-        
-        if from_node == k or to_node == k:
-            return 0
-        
-        d = (from_node - to_node)**2 / (1 + D[from_node, to_node]) * 10**6
-        return int(d)
-    transit_callback_index = routing.RegisterTransitCallback(distance_callback)
-    routing.SetArcCostEvaluatorOfAllVehicles(transit_callback_index)
-    
-    search_parameters = pywrapcp.DefaultRoutingSearchParameters()
-    search_parameters.first_solution_strategy = _strategy['first_solution'] 
-    search_parameters.local_search_metaheuristic = _strategy['metaheuristic'] 
-    search_parameters.time_limit.seconds = _strategy['time_limit']
-    #search_parameters.lns_time_limit.seconds = _strategy['local_time_limit']
-    search_parameters.solution_limit = _strategy['solution_limit']
-    search_parameters.log_search = _strategy['logs']
-    
-    if initial_order is not None:
-        initial_solution = routing.ReadAssignmentFromRoutes([tuple(initial_order)],True)
-        solution = routing.SolveFromAssignmentWithParameters(initial_solution,
-                                                             search_parameters)
-    else:
-        solution = routing.SolveWithParameters(search_parameters)
-        
-    if not solution:
-        raise RuntimeError("TSP not solved!")
-    
-    routes = []
-    for route_nbr in range(routing.vehicles()):
-        index = routing.Start(route_nbr)
-        route = [manager.IndexToNode(index)]
-        while not routing.IsEnd(index):
-            index = solution.Value(routing.NextVar(index))
-            route.append(manager.IndexToNode(index))
-        routes.append(route)
-    
-    #print("Objective:", solution.ObjectiveValue())
-    return routes[0][1:-1]
 
-def plot(data, func = None, cols = None, initial_order = None, scales = {'exp': 1, 'lin': 1}, **kw):
+
+def _czekanowski_ga_seriate(D, popsize = 30, maxiter = 1000, mutprob = .1,
+                            eps = .001, MA_size = 150, random_starts = 1):
+    # input conditions
+    assert(len(D.shape) == 2 and D.shape[0] == D.shape[1])
+    assert(popsize > 1)
+    assert(maxiter > 0)
+    assert(eps > 0)
+    assert(MA_size > 0)
+    assert(random_starts > 0)
+    
+    # initialize parameteres
+    d = D.shape[0]
+    N = maxiter
+    Nparents = int(popsize * .9)
+    if Nparents % 2 != 0:
+        Nparents -= 1
+        
+    # objective function
+    o = obj(D)
+    
+    LOG.info("== Permutation-estimating GA ==")
+    LOG.info("Input shape: (%d,%d)" % D.shape)
+    LOG.info("Pop shape: (%d,%d)" % (popsize,d))
+    LOG.info("Generation: [%d iterations]" % maxiter)
+    LOG.info("| Size:    %d" % popsize)
+    LOG.info("| Parents: %d [%5.3f%% of population]" % (Nparents, Nparents/popsize))
+    
+    optimal,optimal_score = None,float("-inf")
+    for r in range(random_starts):
+        # initialize population
+        pop = np.array([permutation([i for i in range(d)]) for _ in range(popsize)])
+    
+        # run
+        MA_window = ovfw.Container(MA_size)
+        for it,generation in enumerate(range(N)):
+        
+            # fitness of each chromosome
+            fitness = ga.population_score(pop, o)
+            
+            if (it == 0 or (it + 1) % 100 == 0):
+                LOG.info("Iteration %d: score %5.3f" % (it + 1, (-np.sort(-fitness))[0]))
+            
+            # crossover
+            parents,pscore  = ga.select_parents(pop, fitness, Nparents)
+            children,cscore = ga.crossover(parents, o)
+        
+            # create mutants
+            mutants,mscore = ga.mutate(children, o, mutprob)
+        
+            # war
+            pop = ga.war(popsize, (parents,pscore),(children,cscore),(mutants,mscore))
+        
+            # early stopping
+            best,best_score = pop[0,:],o(pop[0,:])
+            MA_window.add(it, best_score)
+            if it > MA_size:
+                if np.mean(np.abs(MA_window.score() - best_score)) < eps:
+                    LOG.info("Early stopping!")
+                    break
+        
+        if best_score > optimal_score:
+            optimal = best
+            optimal_score = best_score
+        
+        LOG.info("Random start %d: best score %5.3f" % (r + 1, optimal_score))
+        
+    return optimal
+
+def distance_rbf(data, func = None,
+                 h:float = 1, coef:float = 1, cutoff:float = 0.1):
+    """Compute the distance matrix, centers and transform with RBF (Gaussian kernel).
+    
+    Args:
+        data (pd.Dataframe): Input.
+        func (callable): Distance metric, passed to cdist.
+        h (float, optional): Kernel width, 1 by default. If None, kernel is omitted. 
+    """
+    assert(data is not None)
+    assert(coef is not None)
+    assert(cutoff is not None)
+    
+    # distance
+    D = cdist(data, data, func) if func is not None else data
+    
+    # standardization
+    #D = (D - np.mean(D)) / np.std(D)
+    
+    # kernel transformation
+    if h is not None:
+        D = np.exp(-(D/h)**2/2)
+    D /= D.max()
+    D *= coef
+    
+    # cutoff
+    
+    D[D <= np.quantile(D, cutoff)] = 0
+    
+    return D
+
+def plot(data, cols = None, diagonal = False, **kw):
     assert(data is not None)
     
     # size
@@ -117,101 +148,38 @@ def plot(data, func = None, cols = None, initial_order = None, scales = {'exp': 
     # default parameters
     if cols is None:
         cols = np.linspace(1, N, num = N).astype(int)
-
-    # distance
-    D = cdist(data, data, func) if func is not None else data
-    
-    # project distance
-    def project(M):
-        # scale
-        M = (M - np.min(M)) / (np.max(M) - np.min(M))
-        # exponential projection
-        Ms = scales['lin'] * np.exp(-M/2/scales['exp']**2)
-        # threshold the little
-        Ms[Ms < scales['thres']*scales['lin']] = 0
-        return Ms
-    D = project(D)
-    
-    # seriate using initial order
-    if initial_order is not None:
-        Di = D[:,initial_order]
-        Di = Di[initial_order,:]
-        colsi = cols[initial_order]
-    else:
-        Di,colsi = D, cols
-    
-    # seriate
-    D_order = _czekanowski_tsp_seriate(Di, initial_order)
-    D_ = Di[:,D_order]
-    D_ = D_[D_order,:]
-    
-    #print("new:", cols[D_order])
     
     # construct data frame
-    def construct_df(M, cols):
+    def construct_df(M, cols, diagonal = False):
         P = {'x': [], 'y': [], 'Distance': []}
         for i,x in enumerate(cols):
             for j,y in enumerate(cols):
+                if not diagonal and x == y: continue
                 P['x'].append(x)
                 P['y'].append(y)
                 P['Distance'].append(M[i,j])
         P = pd.DataFrame(P)
         return P
     
-    P_ = construct_df(D_, colsi[D_order])
-    Pi = construct_df(Di, colsi)
-    P = construct_df(D, cols)
-    
-    # plot
-    plt.scatter(P.x, P.y, s = (P.Distance), alpha = .3, c = 'r')
+    # plot original data
+    P = construct_df(data, cols, diagonal = diagonal)
+    plt.scatter(P.x, P.y, s = (P.Distance), alpha = .9, c = 'red')
     plt.xticks(rotation=90)
     plt.show()
-    plt.scatter(Pi.x, Pi.y, s = (Pi.Distance), alpha = .3, c = 'blue')
+    
+    # estimate permutation using GA
+    D_order = _czekanowski_ga_seriate(data, **kw)
+    # permute
+    data = data[:,D_order]
+    data = data[D_order,:]
+    
+    # plot new permutation
+    P = construct_df(data, cols[D_order], diagonal = diagonal)
+    plt.scatter(P.x, P.y, s = (P.Distance), alpha = .9, c = 'g')
     plt.xticks(rotation=90)
     plt.show()
-    plt.scatter(P_.x, P_.y, s = (P_.Distance), alpha = .3, c = 'g', **kw)
-    plt.xticks(rotation=90)
-    #plt.show()
     
-    return P_
+    return P
  
-    
-# TSP strategy
-_strategy = {
-    'first_solution': routing_enums_pb2.FirstSolutionStrategy.FIRST_UNBOUND_MIN_VALUE, #ALL_UNPERFORMED
-    'metaheuristic': routing_enums_pb2.LocalSearchMetaheuristic.TABU_SEARCH, #GUIDED_LOCAL_SEARCH
-    'time_limit': 30,
-    'local_time_limit': 10,
-    'solution_limit': 100000,
-    'logs': False
-}
-def set_strategy(strategy):
-    global _strategy
-    _strategy = {**_strategy, **strategy}
-    return _strategy
-
-if __name__ == "__main__":
-    # get data
-    regions = src.regions()
-    regions = {k:v for k,v in regions.items() if k[:2].upper() in {'PL','CZ'}}
-    centroids = [list(map(float, r['centroid'].split(','))) for r in regions.values()]
-    cities = np.array([v['name'] for v in regions.values()])
-
-    # random order
-    test_order = [i for i in range(len(cities))]
-    test_order = np.random.permutation(test_order)
-    print("original:", cities[test_order])
-
-    # initial order
-    codes = np.array([v['NUTS3'] for v in regions.values()])
-    init = np.argsort(codes[test_order])
-    print("initial", (cities[test_order])[init])
-    
-    # run
-    plot(np.array(centroids)[test_order], great_circle, cities[test_order],
-         init, {'exp': 9, 'lin': 400, 'thres': .1})
-
-
-
 
 

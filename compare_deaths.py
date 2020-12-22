@@ -14,6 +14,9 @@ try: cz = src.czechia()
 except: pass
 pl = src.poland()
 
+import logging
+logging.basicConfig(level = logging.INFO)
+
 # rename column
 pl = pl\
     .rename({'NUTS2': 'region', 'NUTS3': 'district'}, axis = 1)
@@ -63,7 +66,7 @@ x['deaths'] = x.deaths / x.population * 1000
 
 # dtw distance
 from dtw import *
-from scipy.spatial.distance import euclidean
+from scipy.spatial.distance import correlation
 regs = x.region.unique()
 reg2idx = {r:i for i,r in enumerate(regs)}
 D = np.zeros((len(regs),len(regs)))
@@ -72,12 +75,8 @@ for name1, group1 in x.groupby('region'):
         score = dtw(group1.deaths, group2.deaths)
         D[reg2idx[name1],reg2idx[name2]] = score.normalizedDistance
 # scale to [0,1]
-D = D / D.max()
-
-#order_rmc = np.array([23,4,1,2,5,14,15,16,17,20,21,25,26,28,30,7,24,9,6,12,22,29,3,10,11,19,27,13,27,8,18])
-#order_rmc -= 1
-#D_ = D[:,order_rmc]
-#D = D_[order_rmc,:]
+D /= D.max()
+#D = 1 - D
 
 regdetails = src.regions()
 regnames = np.array([regdetails[n]['name'] for n in regs])
@@ -88,20 +87,32 @@ init = np.argsort(codes)
 
 # Czekanowski diagram
 import czekanowski
-D_ = czekanowski.plot(D, cols = regnames, initial_order = init,
-                      scales = {'exp': .175, 'lin': 250, 'thres': .1})
+np.random.seed = 12345
+
+D_ = czekanowski.distance_rbf(D, h = .06,
+                              coef = 300, cutoff = .2)
 
 
-D_.to_csv("czekanowski.csv", index = False)
+P = czekanowski.plot(D_, cols = regnames, diagonal = True,
+                     popsize = 30, maxiter = 1000, mutprob = .9, random_starts = 3)
+
+
+#D_.to_csv("czekanowski.csv", index = False)
 
 #from seriate import seriate
 #D_order = seriate(D)
 #D_ = D[:,D_order]
 #D_ = D_[D_order,:]
 
-#import seaborn as sns
-#from matplotlib import pyplot as plt
-#plt.rcParams["figure.figsize"] = (9,7)
+d = int(np.sqrt(P.Distance.shape[0]))
+PDist_np = P.Distance.to_numpy().reshape((d,d))
+lab = P.y[:d].to_list()
 
-#sns.heatmap(D, xticklabels=regnames, yticklabels=regnames)
-#plt.show()
+PDist_np = np.flip(PDist_np, axis = 0)
+
+import seaborn as sns
+from matplotlib import pyplot as plt
+plt.rcParams["figure.figsize"] = (9,7)
+sns.heatmap(PDist_np, xticklabels=lab, yticklabels=list(reversed(lab)))
+#sns.heatmap(D_, xticklabels=regnames, yticklabels=regnames)
+plt.show()

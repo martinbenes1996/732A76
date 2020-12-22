@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+"""
+Module to fetch data.
+
+@author: Martin Benes
+"""
 
 import csv
 import json
@@ -20,10 +26,10 @@ def restrictions(country, level = 3):
     if level >= 1: level_cols = ['iso_alpha_2']
     if level >= 2: level_cols = [*level_cols,'administrative_area_level_2']
     if level == 3: level_cols = [*level_cols,'administrative_area_level_3']
-    x = data[['date','iso_alpha_3',*level_cols,*restriction_cols]].reset_index(drop = True)
-    ## restrictions imposed
-    #dx = x[restriction_cols].diff()
-    #x = x[dx.isin([-4.,-3.,-2.,-1.,1.,2.,3.,4.]).any(axis = 1)]
+    x = data[['date','iso_alpha_3',*level_cols,*restriction_cols]]\
+        .reset_index(drop = True)
+    
+    # restrictions imposed
     x['week'] = x.date.apply( lambda dt: dt.isocalendar()[1] )
     x = x[["week",*level_cols,*restriction_cols]]\
         .groupby(["week",*level_cols])\
@@ -32,13 +38,8 @@ def restrictions(country, level = 3):
     if level > 1:
         cities = x\
             .drop_duplicates(subset = ["iso_alpha_2","administrative_area_level_3"])
-        #cities = cities[["iso_alpha_2","administrative_area_level_3"]]\
-        #    .to_records(index=False)
-        print(cities.administrative_area_level_3)
-        print(cities.iso_alpha_2)
-        mapcities = tools.nuts(city = cities.administrative_area_level_3, country = cities.iso_alpha_2)
-        #mapcities = {city: tools.nuts(city, country) for country,city in list(cities)}
-        print(mapcities)
+        mapcities = tools.nuts(city = cities.administrative_area_level_3,
+                               country = cities.iso_alpha_2)
     return x
     
 def czechia():

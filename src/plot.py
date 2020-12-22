@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+Module to generate plots.
+
+@author: Martin Benes
+"""
+
+import sys
+sys.path.append("src")
 
 import numpy as np
 import pandas as pd
@@ -7,8 +16,7 @@ import matplotlib.pyplot as plt
 plt.rcParams["figure.figsize"] = (9,7)
 
 import location
-import src
-
+import _src
 
 def centroid_distance_heatmap(name = None, countries = None):
     
@@ -16,12 +24,12 @@ def centroid_distance_heatmap(name = None, countries = None):
     if countries is None:
         regions = None
     else:
-        regions = {k:v for k,v in src.regions().items() if k[:2].lower() in countries} 
+        regions = {k:v for k,v in _src.regions().items() if k[:2].lower() in countries} 
 
     # get centroid distances
     M,M_nuts = location.centroid_distance_matrix(regions = regions)
     # get region names (for legend)
-    M_names = src.region_names(M_nuts)
+    M_names = _src.region_names(M_nuts)
 
     # plot
     sns.heatmap(M, xticklabels=M_names, yticklabels=M_names)
@@ -38,18 +46,51 @@ def centroid_distance_heatmap_se():
     # plot with explicit data
     centroid_distance_heatmap(countries = {'se'})
 
+def adjacency_matrix(name = None, countries = None):
+    
+    # get selection data only
+    if countries is None:
+        neighbors = None
+    else:
+        neighbors = {k:v for k,v in _src.neighbors().items() if k[:2].lower() in countries}
+    
+    # adjacencies
+    A,A_nuts = location.adjacency_matrix(neighbors = neighbors)
+    # get region names (for legend)
+    A_names = _src.region_names(A_nuts)
+    
+    # discrete colormap
+    cmap = sns.color_palette("gray_r", 2)  
+    
+    # plot
+    ax = sns.heatmap(A, xticklabels=A_names, yticklabels=A_names, cmap=cmap)
+    # modify colorbar:
+    colorbar = ax.collections[0].colorbar 
+    r = colorbar.vmax - colorbar.vmin 
+    colorbar.set_ticks([0.,1.])
+    colorbar.set_ticklabels(["Not adjacent","Adjacent"])                                          
+    
+    if name is None: plt.show()
+    
+    # save plot
+    else: plt.savefig(name)
+
+def adjacency_matrix_czpl():
+    # plot with explicit data
+    adjacency_matrix(countries = {'cz','pl'})
+
 def adjacency_heatmap(name = None, countries = None):
     
     # get selection data only
     if countries is None:
         neighbors = None
     else:
-        neighbors = {k:v for k,v in src.neighbors().items() if k[:2].lower() in countries}
+        neighbors = {k:v for k,v in _src.neighbors().items() if k[:2].lower() in countries}
 
     # get adjacencies
-    M,M_nuts = location.adjacency_matrix(neighbors = neighbors)
+    M,M_nuts = location.adjacency_similarity_matrix(neighbors = neighbors)
     # get region names (for legend)
-    M_names = src.region_names(M_nuts)
+    M_names = _src.region_names(M_nuts)
     
     # plot
     sns.heatmap(M, xticklabels=M_names, yticklabels=M_names)
@@ -72,12 +113,12 @@ def location_score_heatmap(name = None, countries = None):
     if countries is None:
         regions = None
     else:
-        regions = {k:v for k,v in src.regions().items() if k[:2].lower() in countries} 
+        regions = {k:v for k,v in _src.regions().items() if k[:2].lower() in countries} 
     
     # get score
     M,M_nuts = location.location_score_matrix(regions = regions) # bug
     # get region names
-    M_names = src.region_names(M_nuts)
+    M_names = _src.region_names(M_nuts)
     
     # plot
     sns.heatmap(M, xticklabels=M_names, yticklabels=M_names)
@@ -90,9 +131,6 @@ def location_score_heatmap_czpl():
 
     # plot with explicit data
     location_score_heatmap(countries = {'cz','pl'})
-
-
-centroid_distance_heatmap_czpl()
     
 def location_score_heatmap_se():
     
@@ -102,7 +140,7 @@ def location_score_heatmap_se():
 def area_population_scatter(name = None, regions_df = None):
     
     # default data if not given
-    regions_df = regions_df if regions_df is not None else src.regions_df()
+    regions_df = regions_df if regions_df is not None else _src.regions_df()
     
     # plot
     ax = sns.jointplot(x = "Area", y = "Population", hue="Country", data=regions_df)
@@ -117,7 +155,7 @@ def area_population_scatter(name = None, regions_df = None):
 def popdensity_boxplot(name = None, regions_df = None):
     
     # default data if not given
-    regions_df = regions_df if regions_df is not None else src.regions_df()
+    regions_df = regions_df if regions_df is not None else _src.regions_df()
     
     # plot
     plt.yscale("log")
@@ -132,7 +170,7 @@ def popdensity_boxplot(name = None, regions_df = None):
 def popdensity_boxplot_noPRG(name = None, regions_df = None):
     
     # default data if not given
-    regions_df = regions_df if regions_df is not None else src.regions_df()
+    regions_df = regions_df if regions_df is not None else _src.regions_df()
     
     # crop prague off
     regions_df = regions_df[regions_df.Code != "CZ010"]
@@ -140,5 +178,5 @@ def popdensity_boxplot_noPRG(name = None, regions_df = None):
     # plot
     popdensity_boxplot(name = name, regions_df = regions_df)
 
-#popdensity_boxplot()
+adjacency_matrix_czpl()
 #popdensity_boxplot_noPRG()
