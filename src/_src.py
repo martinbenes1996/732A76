@@ -5,6 +5,9 @@ Module to fetch data.
 @author: Martin Benes
 """
 
+import sys
+sys.path.append('src')
+
 import csv
 import json
 import numpy as np
@@ -15,7 +18,7 @@ import covid19dh
 import covid19poland
 import eurostat_deaths
 
-import tools
+import _tools
 
 restriction_cols = [
     'school_closing','workplace_closing','cancel_events','gatherings_restrictions','transport_closing',
@@ -83,7 +86,35 @@ def regions_df():
     
     # return
     return regs_df
+
+def regions_countries_pairs(attributes = ['Population','Area','Density']):
+
+    # fetch region dataframe
+    x = regions_df()
     
+    # default values
+    countries = x.Country.unique()
+    
+    # create dataframe
+    pi_dict = {k: [None for _ in range(len(countries)**2)] for k in attributes}
+    pi_dict = {
+        'Country1': [c for c in countries for _ in range(len(countries))],
+        'Country2': [c for _ in range(len(countries)) for c in countries],
+        **pi_dict
+    }
+    
+    # pi values dataframes
+    pi_df = pd.DataFrame(pi_dict)
+    # unique unequal values
+    pi_df = pi_df[pi_df.Country1 != pi_df.Country2]
+    unique_rows = pi_df\
+        .apply(lambda r: tuple(sorted((r.Country1, r.Country2))), axis = 1)\
+        .duplicated()
+    pi_df = pi_df[unique_rows]\
+        .reset_index(drop = True)
+    
+    return pi_df
+
 def neighbors():
     """Load adjancecy file."""
     with open("data/adjacency.json") as fp:
@@ -92,6 +123,6 @@ def neighbors():
             neighbors[nb].append(nb)
     return neighbors
 
-if __name__ == "__main__":
-    x = restrictions("CZE")
+#if __name__ == "__main__":
+#    x = restrictions("CZE")
     #print(x)

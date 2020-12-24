@@ -8,6 +8,8 @@ Module to generate plots.
 import sys
 sys.path.append("src")
 
+from dtw import *
+from sklearn.neighbors import KNeighborsRegressor
 import numpy as np
 import pandas as pd
 
@@ -17,6 +19,7 @@ plt.rcParams["figure.figsize"] = (12,10)
 
 import location
 import _src
+import _covid
 
 def centroid_distance_heatmap(h = 100, name = None, countries = None):
     
@@ -177,4 +180,71 @@ def popdensity_boxplot_noPRG(name = None, regions_df = None):
     
     # plot
     popdensity_boxplot(name = name, regions_df = regions_df)
+ 
+_dtwcache = {}
+_seed = 54321
+def _dtw_data(*args, **kw):
+    global _dtwcache, _seed
+    key = str(args) + str(kw)
+    try: return _dtwcache[key]
+    except:
+        np.random.seed = _seed
+        _dtwcache[key] = _covid.czekanowski_dtw(*args, **kw)
+    return _dtwcache[key]
+def flush_cache(seed = 54321):
+    global _dtwcache, _seed
+    _dtwcache = {}
+    _seed = seed
     
+def deaths_dtw_czekanowski(*args, **kw):
+    
+    # data
+    P = _dtw_data(*args, **kw)
+    
+    # plot
+    plt.scatter(P.x, P.y, s = (P.Distance), alpha = .9, c = 'g')
+    plt.xticks(rotation=90)
+    plt.show()
+
+def deaths_dtw_heatmap(*args, **kw):
+    
+    # data
+    P = _dtw_data(*args, **kw)
+    
+    # df to np
+    d = int(np.sqrt(P.Distance.shape[0]))
+    PDist_np = P.Distance.to_numpy().reshape((d,d))
+    lab = P.y[:d].to_list()
+    PDist_np = np.flip(PDist_np, axis = 0)
+    
+    # plot
+    sns.heatmap(PDist_np, xticklabels=lab, yticklabels=list(reversed(lab)))
+    plt.show()
+
+def dtw_plot(x, y, *args, **kw):
+    
+    # data
+    deaths = _covid.deaths_df()
+    deaths['day'] = (deaths.date - deaths.date.min()).apply(lambda i: i.days)
+    
+    datax = deaths[deaths.region == x]
+    datay = deaths[deaths.region == y]
+    
+    def to2D(ser):
+        return ser.to_numpy().reshape((ser.shape[0],1))
+    def predict_knn(X, nn = 14):
+        regr = KNeighborsRegressor(n_neighbors=nn)
+        regr.fit(to2D(X.day), X.deaths.astype(float))
+        pred = regr.predict(to2D(X.day))
+        return pred
+    
+    fx = predict_knn(datax)
+    fy = predict_knn(datay)
+    
+    # map names onto code
+    dtw(fx, fy, keep_internals=True, 
+        step_pattern=rabinerJuangStepPattern(6, "c"))\
+        .plot(type="twoway")
+    plt.show()
+
+#dtw_plot('CZ')

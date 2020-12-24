@@ -15,7 +15,7 @@ from seriate import seriate
 from sklearn.preprocessing import minmax_scale
 
 import _src
-import tools
+import _tools
 
 def adjacency_matrix(neighbors = None):
     
@@ -74,9 +74,9 @@ def centroid_distance_matrix(h = 100, regions = None):
     centroids = [list(map(float, r['centroid'].split(','))) for r in regions.values()]
     
     # distance matrix
-    D_centroid = cdist(centroids, centroids, metric = tools.great_circle)
+    D_centroid = cdist(centroids, centroids, metric = _tools.great_circle)
     # Gaussian kernel (distance -> similarity matrix)
-    K_centroid = tools.rbf(D_centroid, h = h)
+    K_centroid = _tools.rbf(D_centroid, h = h)
     # scale inverted (similarity -> distance matrix)
     K_centroid = minmax_scale(-K_centroid)
     # seriate

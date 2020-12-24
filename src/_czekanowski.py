@@ -5,6 +5,9 @@ Created on Tue Dec 15 08:33:52 2020
 @author: martin
 """
 
+import sys
+sys.path.append('src')
+
 import numpy as np
 from numpy.random import permutation
 import pandas as pd
@@ -17,7 +20,7 @@ import matplotlib.pyplot as plt
 plt.rcParams["figure.figsize"] = (9,7)
 plt.rcParams['font.size'] = 7
 
-import ga
+import _ga
 import ovfw
 
 def Um(M):
@@ -41,7 +44,7 @@ def obj(M):
 
 
 def _czekanowski_ga_seriate(D, popsize = 30, maxiter = 1000, mutprob = .1,
-                            eps = .001, MA_size = 150, random_starts = 1):
+                            eps = .001, MA_size = 150, random_starts = 1, **kw):
     # input conditions
     assert(len(D.shape) == 2 and D.shape[0] == D.shape[1])
     assert(popsize > 1)
@@ -52,7 +55,6 @@ def _czekanowski_ga_seriate(D, popsize = 30, maxiter = 1000, mutprob = .1,
     
     # initialize parameteres
     d = D.shape[0]
-    N = maxiter
     Nparents = int(popsize * .9)
     if Nparents % 2 != 0:
         Nparents -= 1
@@ -74,32 +76,34 @@ def _czekanowski_ga_seriate(D, popsize = 30, maxiter = 1000, mutprob = .1,
     
         # run
         MA_window = ovfw.Container(MA_size)
-        for it,generation in enumerate(range(N)):
+        for it,generation in enumerate(range(maxiter)):
         
             # fitness of each chromosome
-            fitness = ga.population_score(pop, o)
+            fitness = _ga.population_score(pop, o)
             
             if (it == 0 or (it + 1) % 100 == 0):
                 LOG.info("Iteration %d: score %5.3f" % (it + 1, (-np.sort(-fitness))[0]))
             
             # crossover
-            parents,pscore  = ga.select_parents(pop, fitness, Nparents)
-            children,cscore = ga.crossover(parents, o)
+            parents,pscore  = _ga.select_parents(pop, fitness, Nparents)
+            children,cscore = _ga.crossover(parents, o)
         
             # create mutants
-            mutants,mscore = ga.mutate(children, o, mutprob)
+            mutants,mscore = _ga.mutate(children, o, mutprob)
         
             # war
-            pop = ga.war(popsize, (parents,pscore),(children,cscore),(mutants,mscore))
+            pop = _ga.war(popsize, (parents,pscore),(children,cscore),(mutants,mscore))
         
             # early stopping
             best,best_score = pop[0,:],o(pop[0,:])
-            MA_window.add(it, best_score)
             if it > MA_size:
                 if np.mean(np.abs(MA_window.score() - best_score)) < eps:
                     LOG.info("Early stopping!")
                     break
-        
+            
+            # append to MA window
+            MA_window.add(it, best_score)
+            
         if best_score > optimal_score:
             optimal = best
             optimal_score = best_score
@@ -109,7 +113,7 @@ def _czekanowski_ga_seriate(D, popsize = 30, maxiter = 1000, mutprob = .1,
     return optimal
 
 def distance_rbf(data, func = None,
-                 h:float = 1, coef:float = 1, cutoff:float = 0.1):
+                 h:float = 1, coef:float = 1, cutoff:float = 0.1, **kw):
     """Compute the distance matrix, centers and transform with RBF (Gaussian kernel).
     
     Args:
@@ -162,10 +166,10 @@ def plot(data, cols = None, diagonal = False, **kw):
         return P
     
     # plot original data
-    P = construct_df(data, cols, diagonal = diagonal)
-    plt.scatter(P.x, P.y, s = (P.Distance), alpha = .9, c = 'red')
-    plt.xticks(rotation=90)
-    plt.show()
+    #P = construct_df(data, cols, diagonal = diagonal)
+    #plt.scatter(P.x, P.y, s = (P.Distance), alpha = .9, c = 'red')
+    #plt.xticks(rotation=90)
+    #plt.show()
     
     # estimate permutation using GA
     D_order = _czekanowski_ga_seriate(data, **kw)
@@ -175,11 +179,58 @@ def plot(data, cols = None, diagonal = False, **kw):
     
     # plot new permutation
     P = construct_df(data, cols[D_order], diagonal = diagonal)
-    plt.scatter(P.x, P.y, s = (P.Distance), alpha = .9, c = 'g')
-    plt.xticks(rotation=90)
-    plt.show()
     
     return P
+    #plt.scatter(P.x, P.y, s = (P.Distance), alpha = .9, c = 'g')
+    #plt.xticks(rotation=90)
+    #plt.show()
+    
+    #return P
  
-
+def heatmap(data, cols = None, diagonal = False, **kw):
+    assert(data is not None)
+    
+    # size
+    N = data.shape[0]
+    
+    # default parameters
+    if cols is None:
+        cols = np.linspace(1, N, num = N).astype(int)
+    
+    # construct data frame
+    def construct_df(M, cols, diagonal = False):
+        P = {'x': [], 'y': [], 'Distance': []}
+        for i,x in enumerate(cols):
+            for j,y in enumerate(cols):
+                if not diagonal and x == y: continue
+                P['x'].append(x)
+                P['y'].append(y)
+                P['Distance'].append(M[i,j])
+        P = pd.DataFrame(P)
+        return P
+    
+    def plot_heatmap(P):
+        # df to np
+        d = int(np.sqrt(P.Distance.shape[0]))
+        PDist_np = P.Distance.to_numpy().reshape((d,d))
+        lab = P.y[:d].to_list()
+        PDist_np = np.flip(PDist_np, axis = 0)
+        # plot
+        sns.heatmap(PDist_np, xticklabels=lab, yticklabels=list(reversed(lab)))
+        plt.show()
+    # plot original data
+    P = construct_df(data, cols, diagonal = diagonal)
+    plot_heatmap(P)
+    
+    # estimate permutation using GA
+    D_order = _czekanowski_ga_seriate(data, **kw)
+    # permute
+    data = data[:,D_order]
+    data = data[D_order,:]
+    
+    # plot new permutation
+    P = construct_df(data, cols[D_order], diagonal = diagonal)
+    plot_heatmap(P)
+    
+    return P
 

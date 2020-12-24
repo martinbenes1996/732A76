@@ -6,7 +6,6 @@ Created on Fri Dec 18 08:10:29 2020
 """
 
 import numpy as np
-
 from numpy.random import choice
 
 import ovfw

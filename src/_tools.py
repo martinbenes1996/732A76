@@ -1,12 +1,27 @@
+# -*- coding: utf-8 -*-
+"""
+Module containing tools used globally among many modules.
 
-from math import radians, degrees, sin, cos, asin, acos, sqrt
+@author: Martin Benes
+"""
+
+from math import radians, sin, cos, acos
 import numpy as np
 import pandas as pd
+from scipy.stats import f
 
 import eunuts
-
 #eunuts.init_cache()
+
 def nuts(city, country):
+    """Map city onto NUTS code.
+    
+    Args:
+        city (str): City name.
+        country (str): Country where the city is.
+    Returns:
+        (str) NUTS code of the city.
+    """
     df = pd.DataFrame(data = {'city': city, 'country': country})
     return eunuts.nuts(df)
 
@@ -34,6 +49,13 @@ def rbf(d, h = 100):
     """
     return np.exp(-d**2 / 2 / h**2)
 
-if __name__ == "__main__":
-    nuts3 = nuts("Brno","CZ")
-    print(nuts3)
+def f_test(x, y):
+    # input
+    x, y = np.array(x), np.array(y)
+    # F test statistic
+    test_stat = np.var(x, ddof=1)/np.var(y, ddof=1)
+    # degrees of freedom
+    dfn, dfd = x.size - 1, y.size - 1
+    # find p value of F test statistic
+    pi = 1 - f.cdf(test_stat, dfn, dfd)
+    return test_stat, pi

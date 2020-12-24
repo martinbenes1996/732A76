@@ -8,7 +8,7 @@ Created on Fri Dec 18 13:09:52 2020
 import sys
 import unittest
 
-sys.path.append(".")
+sys.path.append('src')
 import ovfw
 
 class Test_Container(unittest.TestCase):
