@@ -12,7 +12,7 @@ import math
 import numpy as np
 import pandas as pd
 from scipy import stats
-from scipy.stats import ttest_ind, levene, f_oneway
+from scipy.stats import ttest_ind, levene, t, kstest
 
 import _src
 import _tools
@@ -100,6 +100,80 @@ def regions_normally_distributed(pi = True, alpha = .05):
     pi_df.columns = ['Country', *attributes]
     return pi_df
 
+class Distr:
+    def __init__(self, pvalue):
+        self.pvalue = pvalue
+        
+def is_t_distributed(X, K = 500):
+    # get t parameters
+    nu,mu,sigma = t.fit(X, loc=X.mean(), scale=X.std())
+    # Kolmogorov-Smirnoff of original sample
+    stat0,_ = kstest(X.to_numpy(), t.cdf, args = (nu,))
+    
+    # distribution
+    d = []
+    for k in range(K):
+        # generate
+        tsample = t.rvs(nu, loc=mu, scale=sigma, size=X.shape[0])
+        # KS
+        stat,_ = kstest(tsample, t.cdf, args = (nu,))
+        d.append(stat)
+    d = np.array(d)
+    
+    # compute pvalue
+    pvalue = (np.sum(d > stat0) + 1) / (d.shape[0] + 1)
+    return Distr(pvalue)
+
+def regions_t_distributed(K = 500, pi = True, alpha = .05):
+    """Tests whether regions are t-distributed in their
+    populations, areas and densities over different countries.
+    Uses sample test.
+    
+    H0: Regions of country are distributed normally in the attribute.
+    HA: They are not.
+    
+    Args:
+        pi (bool): If True, returns pi values.
+                   If False, returns validity of H0.
+                   Defautly True.
+        alpha (float): Significance level.
+    """
+    
+    # data
+    attributes = ['Population','Area','Density']
+    regions_df = _src.regions_df()
+    
+    # empty single country
+    countries = regions_df.Country.unique()
+    # create dataframe
+    pi_dict = {k: [None for _ in range(len(countries))] for k in attributes}
+    pi_dict = {
+        'Country': [c for c in countries],
+        **pi_dict
+    }
+    # pi values dataframes
+    pi_df = pd.DataFrame(pi_dict)
+    
+    # perform the test
+    for a in attributes:
+        for i,r in pi_df.iterrows():    
+            # data
+            data = regions_df[regions_df.Country == r.Country][a]
+            
+            # t test
+            pi_df.at[i,a] = is_t_distributed(data, K = K).pvalue
+            
+    # return pi value
+    if pi: return pi_df
+    
+    # make decision
+    pi_df = pd.concat([
+        pi_df[['Country']],
+        pi_df[attributes] > alpha
+    ], axis = 1, ignore_index = True)
+    pi_df.columns = ['Country', *attributes]
+    return pi_df
+
 def administrative_divisions_similar(pi = True, alpha = .05):
     """Tests that regions of two countries have same mean
     in their populations, areas and densities.
@@ -132,9 +206,7 @@ def administrative_divisions_similar(pi = True, alpha = .05):
             #ftest, fpi = _tools.f_test(data1, data2)
             ftest,fpi = stats.levene(data1, data2)
             equal_var = fpi > alpha
-            #print(np.std(data1), np.std(data2))
-            #print(r.Country1, r.Country2, a, fpi, equal_var)
-            
+
             # test
             pop_pi = stats.ttest_ind(data1, data2, equal_var = equal_var)
             # write down pvalue

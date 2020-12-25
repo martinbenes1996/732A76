@@ -12,6 +12,7 @@ from dtw import *
 import numpy as np
 import pandas as pd
 from scipy.spatial.distance import correlation
+from sklearn.neighbors import KNeighborsRegressor
 
 import _czekanowski
 import _src
@@ -80,18 +81,51 @@ def deaths_df():
 
     return x
 
+def _to2D(ser):
+    return ser.to_numpy().reshape((ser.shape[0],1))
+def _predict_knn(X, y, nn = 14):
+    regr = KNeighborsRegressor(n_neighbors=nn)
+    regr.fit(_to2D(X), y.astype(float))
+    pred = regr.predict(_to2D(X))
+    return pred
+
+def deaths_smooth(region, data = None, **kw):
+    
+    # fetch data if not given
+    if data is None:
+        data = deaths_df()
+    
+    # filter
+    data = data[data.region == region]
+    
+    # smoother
+    X = (data.date - data.date.min())\
+        .apply(lambda i: i.days)     
+    f = _predict_knn(X, data.deaths, **kw)
+    
+    # return x, y, fx
+    return data.date.to_list(), data.deaths.to_numpy(), f
+
 def dtw_distance(data = None, dist_method = 'euclidean'):
 
     # data
     x = data if data is not None else deaths_df()
+    dtmin = x.date.min()
     
     # dtw distance
     regs = x.region.unique()
     reg2idx = {r:i for i,r in enumerate(regs)}
     D = np.zeros((len(regs),len(regs)))
     for name1, group1 in x.groupby('region'):
+        x1 = (group1.date - dtmin).apply(lambda i: i.days)
+        x2 = group1.deaths_1K
         for name2, group2 in x.groupby('region'):
-            score = dtw(group1.deaths_1K, group2.deaths_1K,
+            y1 = (group2.date - dtmin).apply(lambda i: i.days)
+            y2 = group2.deaths_1K
+            # knn smoother
+            fx1 = _predict_knn(x1, x2)
+            fx2 = _predict_knn(y1, y2)
+            score = dtw(fx1, fx2,#group1.deaths_1K, group2.deaths_1K,
                         dist_method = dist_method)
             D[reg2idx[name1],reg2idx[name2]] = score.normalizedDistance
 
@@ -136,4 +170,3 @@ def czekanowski_dtw(data = None, dist_method = 'euclidean', **kw):
         **kw
     )
     return P
-

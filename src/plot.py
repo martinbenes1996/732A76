@@ -9,7 +9,6 @@ import sys
 sys.path.append("src")
 
 from dtw import *
-from sklearn.neighbors import KNeighborsRegressor
 import numpy as np
 import pandas as pd
 
@@ -161,9 +160,11 @@ def popdensity_boxplot(name = None, regions_df = None):
     regions_df = regions_df if regions_df is not None else _src.regions_df()
     
     # plot
-    plt.yscale("log")
-    sns.boxplot(x="Country", y="Density", data=regions_df, color = "1")
-    sns.stripplot(x="Country", y="Density", color='black', size=10, alpha=0.5, data=regions_df)
+    plt.rcParams.update({'font.size': 20})
+    #plt.yscale("log")
+    sns.violinplot(x="Country", y="Density", data=regions_df)
+    #sns.boxplot(x="Country", y="Density", data=regions_df, color = "1")
+    sns.stripplot(x="Country", y="Density", color='black', size=6, alpha=0.8, data=regions_df)
     if name is None: plt.show()
     
     # save
@@ -221,30 +222,34 @@ def deaths_dtw_heatmap(*args, **kw):
     sns.heatmap(PDist_np, xticklabels=lab, yticklabels=list(reversed(lab)))
     plt.show()
 
+def deaths_smooth(region):
+    
+    # fetch data
+    x,y,fx = _covid.deaths_smooth(region = region)
+
+    # plot
+    plt.rcParams.update({'font.size': 16})
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.scatter(x, y)
+    ax.plot(x, fx, c = 'r')
+    plt.show()
+    
 def dtw_plot(x, y, *args, **kw):
     
     # data
     deaths = _covid.deaths_df()
-    deaths['day'] = (deaths.date - deaths.date.min()).apply(lambda i: i.days)
     
-    datax = deaths[deaths.region == x]
-    datay = deaths[deaths.region == y]
-    
-    def to2D(ser):
-        return ser.to_numpy().reshape((ser.shape[0],1))
-    def predict_knn(X, nn = 14):
-        regr = KNeighborsRegressor(n_neighbors=nn)
-        regr.fit(to2D(X.day), X.deaths.astype(float))
-        pred = regr.predict(to2D(X.day))
-        return pred
-    
-    fx = predict_knn(datax)
-    fy = predict_knn(datay)
-    
+    # smooth
+    plt.rcParams.update({'font.size': 16})
+    x1,x2,fx = _covid.deaths_smooth(x, deaths)
+    y1,y2,fy = _covid.deaths_smooth(y, deaths)
+
     # map names onto code
     dtw(fx, fy, keep_internals=True, 
         step_pattern=rabinerJuangStepPattern(6, "c"))\
         .plot(type="twoway")
     plt.show()
 
-#dtw_plot('CZ')
+#deaths_smooth('CZ080')
+#dtw_plot('PL9', 'PL22')
