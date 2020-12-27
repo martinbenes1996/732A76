@@ -14,6 +14,7 @@ import pandas as pd
 from scipy import stats
 from scipy.stats import ttest_ind, levene, t, kstest
 
+import _covid
 import _src
 import _tools
 
@@ -32,6 +33,7 @@ def IQR(regions = None, countries = None):
     # subset country
     if countries:
         regions = regions[regions.Country.isin(list(countries))]
+    descriptive_cols = {'Region','Code','Country'}
     
     def _IQR(x):
         """IQR method for a vector."""
@@ -175,8 +177,7 @@ def regions_t_distributed(K = 500, pi = True, alpha = .05):
     return pi_df
 
 def administrative_divisions_similar(pi = True, alpha = .05):
-    """Tests that regions of two countries have same mean
-    in their populations, areas and densities.
+    """Tests that regions have same mean in their populations, areas and densities.
     Use two-sampled t_test with preceding F-test to test equal variances.
     Only the result of t_test is returned.
     
@@ -223,4 +224,79 @@ def administrative_divisions_similar(pi = True, alpha = .05):
     pi_df.columns = ['Country1','Country2', *attributes]
     return pi_df
 
-
+def weekdays_equal_ratio(pi = True, alpha = .05):
+    """Tests that deaths have equal ratio over week days.
+    Use two-sampled t_test.
+    Only the result of t_test is returned.
+    
+    H0: mu1 = mu2
+    HA: mu1 != mu2
+    
+    Args:
+        pi (bool): If True, returns pi values.
+                   If False, returns validity of H0.
+                   Defautly True.
+        alpha (float): Significance level.
+    """
+    
+    # data
+    x = _covid.deaths_df()
+    # years and weekdays
+    x['year'] = x.date.apply(lambda d: d.year)
+    x['weekday'] = x.date.apply(lambda d: d.weekday() + 1)
+    x['country'] = x.region.apply(lambda d: d[:2])
+    
+    # over all regions
+    x = x[["country","year","week","weekday","deaths"]]\
+        .groupby(["country","year","week","weekday"])\
+        .sum()\
+        .reset_index()
+    x.columns = ["country","year","week","weekday", *x.columns[4:]]
+    # over everything
+    total = x\
+        .groupby(['country','week'])\
+        .aggregate({'deaths': 'sum'})\
+        .reset_index()\
+        .rename(mapper = {'deaths': 'total'}, axis = 1)
+    x = x.merge(total, on = ["country","week"])
+    x['deaths'] = (x.deaths / x.total)\
+        .fillna(0)
+    
+    # create dataframe
+    weekdays = ['Mo','Tu','We','Th','Fr','Sa','Su']
+    pi_dict = {k: [None for _ in range(len(x.country.unique()))] for k in weekdays}
+    pi_dict = {
+        'Country': [c for c in x.country.unique()],
+        **pi_dict
+    }
+    pi_df = pd.DataFrame(pi_dict)
+    
+    # per country
+    for gname, g in x.groupby('country'):
+        # prepare t-test
+        gmean = g\
+            .groupby('weekday')\
+            .aggregate({'deaths': 'sum'})
+        gmean['deaths'] /= gmean.deaths.sum()
+        gvar = g\
+            .groupby('weekday')\
+            .aggregate({'deaths': 'var'})
+        gN = g[['year','week']]\
+            .drop_duplicates()\
+            .shape[0]
+        # t statistic
+        tt = (gmean - 1/7) / np.sqrt(gvar / gN)
+        pval = (t.sf(np.abs(tt), gN-1)*2)
+        
+        # result
+        for i,a in enumerate(weekdays):
+            # value
+            val = pval if pi else pval > alpha
+            # set
+            row = (pi_df.Country == gname)
+            #print(pi_df[a,np.argmax(row)])
+            pi_df[a][np.argmax(row)] = val[i,0]
+    
+    # return
+    return pi_df
+            

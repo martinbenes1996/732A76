@@ -8,6 +8,7 @@ Module to generate plots.
 import sys
 sys.path.append("src")
 
+from datetime import datetime
 from dtw import *
 import numpy as np
 import pandas as pd
@@ -203,9 +204,57 @@ def deaths_dtw_czekanowski(*args, **kw):
     P = _dtw_data(*args, **kw)
     
     # plot
-    plt.scatter(P.x, P.y, s = (P.Distance), alpha = .9, c = 'g')
+    plt.rcParams.update({'font.size': 12})
+    plt.scatter(P.x, P.y, s = (P.Distance), alpha = .9, c = 'black')
     plt.xticks(rotation=90)
     plt.show()
+
+def deaths_country_series():
+    
+    # read data
+    data = _covid.deaths_df()
+    
+    # data by country
+    data['country'] = data.region\
+        .apply(lambda i: i[:2])
+    data = data\
+        .groupby(['date','country'])\
+        .aggregate({'deaths': 'sum'})\
+        .reset_index()
+    
+    # plot
+    plt.rcParams.update({'font.size': 16})
+    sns.lineplot(data = data, x = "date", y = "deaths", hue = "country")
+    plt.plot(2*[datetime(2020,7,31)], [0, data.deaths.max()], c = "black")
+    plt.plot(2*[data.date.min()], [0, data.deaths.max()], c = "black")
+    plt.show()
+    
+def deaths_dtw_czekanowski_global():
+    deaths_dtw_czekanowski(h = .008, coef = 300, random_starts = 1)
+
+def deaths_dtw_czekanowski_firstWave():
+    
+    # read data
+    data = _covid.deaths_df()
+    # filter (only first wave)
+    data = data[data.date < datetime(2020, 8, 1)]
+    
+    # czekanowski of the first wave
+    deaths_dtw_czekanowski(data = data, h = .008, coef = 250, random_starts = 1)
+
+def deaths_dtw_czekanowski_sweden():
+    deaths_dtw_czekanowski(h = .035, coef = 300, random_starts = 1)
+
+def deaths_dtw_czekanowski_sweden_firstWave():
+    
+    # read data
+    data = _covid.deaths_df()
+    # filter (only first wave)
+    data = data[data.date < datetime(2020, 8, 1)]
+    
+    # czekanowski of the first wave
+    deaths_dtw_czekanowski(data = data, h = .035, coef = 300, random_starts = 1)
+    
 
 def deaths_dtw_heatmap(*args, **kw):
     
@@ -251,5 +300,13 @@ def dtw_plot(x, y, *args, **kw):
         .plot(type="twoway")
     plt.show()
 
-#deaths_smooth('CZ080')
-#dtw_plot('PL9', 'PL22')
+def weekday_ratio_heatmap():
+    
+    # fetch data
+    D,lab = _covid.weekday_ratio_distance()
+    
+    # plot
+    plt.rcParams.update({'font.size': 16})
+    sns.heatmap(D, xticklabels=lab, yticklabels=lab)
+    plt.show()
+

@@ -16,6 +16,7 @@ import pandas as pd
 import covid19czechia
 import covid19dh
 import covid19poland
+import covid19sweden
 import eurostat_deaths
 
 import _tools
@@ -51,6 +52,9 @@ def czechia():
 def poland():
     """Fetch Poland data."""
     return covid19poland.covid_deaths(level = 3)
+def sweden():
+    """Fetch Sweden data."""
+    return covid19sweden.covid_deaths()
 def population():
     """Fetch population data from 2019."""
     population = eurostat_deaths.populations()

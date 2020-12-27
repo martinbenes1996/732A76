@@ -8,10 +8,13 @@ Created on Sun Dec  6 09:57:23 2020
 import sys
 sys.path.append('src')
 
+from datetime import datetime,timedelta
 from dtw import *
 import numpy as np
+from numpy.random import multinomial
 import pandas as pd
 from scipy.spatial.distance import correlation
+from seriate import seriate
 from sklearn.neighbors import KNeighborsRegressor
 
 import _czekanowski
@@ -19,6 +22,32 @@ import _src
 
 import logging
 LOG = logging.getLogger(__name__)
+
+def sweden_resample():
+    """Fetch Sweden data and resample into days."""
+    
+    # data
+    x = _src.sweden()
+    
+    # sample weeks into days
+    d = {'date': [], 'region': [], 'region_name': [], 'week': [], 'deaths': []}
+    for i in x.itertuples():
+        # dates
+        dt = datetime.strptime("%4d-W%02d-1" % (i.year, i.week - 1), "%Y-W%W-%w")
+        dt_week = [dt + timedelta(days = j) for j in range(7)]
+        # sampling
+        day_deaths = multinomial(i.deaths, [1/7.]*7, size = 1)[0]
+        
+        # append
+        d['date'] = [*(d['date']), *dt_week]
+        d['deaths'] = [*(d['deaths']), *day_deaths]
+        for _ in range(7): d['region'].append(i.region)
+        for _ in range(7): d['region_name'].append(i.region_name)
+        for _ in range(7): d['week'].append(i.week)
+    
+    # return dataframe
+    return pd.DataFrame(d)\
+        .sort_values(['date','region'])
 
 cachedata = None
 def deaths_df():
@@ -29,6 +58,7 @@ def deaths_df():
     # fetch data
     cz = _src.czechia()
     pl = _src.poland()
+    se = sweden_resample()
 
     # rename column
     pl = pl\
@@ -36,14 +66,15 @@ def deaths_df():
 
     # match same dates
     dt_range = pd.date_range(
-        start = max(cz.date.min(), pl.date.min()),
-        end = min(cz.date.max(), pl.date.max())
+        start = min(cz.date.min(), pl.date.min(), se.date.min()),
+        end = min(cz.date.max(), pl.date.max(), se.date.max())
     )
     cz = cz[cz.date.isin(dt_range)]
     pl = pl[pl.date.isin(dt_range)]
+    se = se[se.date.isin(dt_range)]
 
     # merge into single data frame
-    df = pd.concat([cz, pl])\
+    df = pd.concat([cz, pl, se])\
         .groupby(['date','week','region'])\
         .sum()\
         .reset_index()
@@ -153,7 +184,7 @@ def czekanowski_dtw(data = None, dist_method = 'euclidean', **kw):
     D = dtw_distance(data = data, dist_method = dist_method)
     
     # columns
-    regdetails = {k:v for k,v in _src.regions().items() if k[:2] in {'CZ','PL'}}
+    regdetails = {k:v for k,v in _src.regions().items()}
     regnames = np.array([regdetails[n]['name'] for n in regdetails])
     
     # kernel projection
@@ -170,3 +201,89 @@ def czekanowski_dtw(data = None, dist_method = 'euclidean', **kw):
         **kw
     )
     return P
+
+def _weekday_ratio(data = None, country = None, region = None):
+    
+    # data
+    x = data if data is not None else deaths_df()
+
+    # country filter
+    if country is not None:
+        x = x[x.region.apply(lambda i: i[:2] == country)]
+    
+    # region filter
+    if region is not None:
+        x = x[x.region.apply(lambda i: i == region)]
+    
+    # weekday
+    x['weekday'] = x.date.apply(lambda d: d.weekday() + 1)
+    
+    # get mean ratio
+    ratio = x\
+        .groupby("weekday")\
+        .aggregate({'deaths': 'mean'})
+    ratio['deaths'] /= ratio.sum()['deaths']
+    
+    # deaths per weekday ratio
+    return ratio.deaths
+
+def _weekday_data(data = None, country = None, region = None):
+    
+    # data
+    x = data if data is not None else deaths_df()
+
+    # country filter
+    if country is not None:
+        x = x[x.region.apply(lambda i: i[:2] == country)]
+    
+    # region filter
+    if region is not None:
+        x = x[x.region.apply(lambda i: i == region)]
+    
+    # weekday
+    x['weekday'] = x.date.apply(lambda d: d.weekday() + 1)
+    
+    # get mean ratio
+    ratio = x\
+        .groupby("weekday")\
+        .aggregate({'deaths': 'mean'})
+    ratio['deaths'] /= ratio.sum()['deaths']
+    
+    # deaths per weekday ratio
+    return ratio.deaths
+
+
+
+def weekday_ratio_distance(data = None, dist_method = correlation):
+    
+    # data
+    x = data if data is not None else deaths_df()
+    
+    # regions
+    regs = x.region.unique()
+    reg2idx = {r:i for i,r in enumerate(regs)}
+    regdetails = {k:v for k,v in _src.regions().items()}
+    regnames = np.array([regdetails[n]['name'] for n in regdetails])
+    
+    # each pair distance
+    D = np.zeros((len(regs),len(regs)))   
+    for name1, group1 in x.groupby('region'):
+        ratio1 = _weekday_ratio(data = group1)
+        for name2, group2 in x.groupby('region'):
+            ratio2 = _weekday_ratio(data = group2)
+           
+            # distance
+            ratioD = dist_method(ratio1, ratio2)
+            D[reg2idx[name1],reg2idx[name2]] = ratioD
+
+    # scale to [0,1]
+    D /= D.max()
+
+    # seriate
+    D_order = seriate(D)
+    D_ = D[:,D_order]
+    D = D_[D_order,:]
+    
+    # return
+    return D, regnames[D_order]
+

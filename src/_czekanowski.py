@@ -55,7 +55,7 @@ def _czekanowski_ga_seriate(D, popsize = 30, maxiter = 1000, mutprob = .1,
     
     # initialize parameteres
     d = D.shape[0]
-    Nparents = int(popsize * .9)
+    Nparents = int(popsize*.75)
     if Nparents % 2 != 0:
         Nparents -= 1
         
