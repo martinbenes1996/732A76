@@ -53,9 +53,9 @@ plot.location_score_heatmap(h = 100) # combination
 plot.deaths_country_series()
 
 # weekday ratio
-plot.weekday_ratio_heatmap()
-print( hypotheses.weekdays_equal_ratio(pi = False) )
 
+print( hypotheses.weekdays_equal_ratio(pi = False) )
+#plot.weekday_ratio_heatmap()
 
 
 
