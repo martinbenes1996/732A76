@@ -120,7 +120,7 @@ def plot_map(assets, regions, colors = {}, font_size = 15):
     ax.axis('off') # remove axis
 
     # plot continent shades
-    borders.plot(ax = ax, color = (.97,.97,.97), linewidth = .5)
+    borders.plot(ax = ax, color = (.95,.95,.95), linewidth = .5)
     # plot shapes
     for name,group in shapes.groupby('CNTR_CODE'):
         group.plot(ax = ax, color = get_color(name))
@@ -152,3 +152,13 @@ def SE_map():
         colors = {'SE': (.96,.835,.28)},
         font_size = 15
     )
+
+def map_results(results):
+    """Constructs map of results."""
+    plot_map(
+        [],#['SE', 'SWE'],
+        results,
+        colors = {'SE': (.96,.835,.28)},
+        font_size = 24
+    )
+

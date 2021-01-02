@@ -51,7 +51,7 @@ def czechia():
     return covid19czechia.covid_deaths(level = 3, usecache = True)
 def poland():
     """Fetch Poland data."""
-    return covid19poland.covid_deaths(level = 3)
+    return covid19poland.covid_deaths(level = 3, from_github = True)
 def sweden():
     """Fetch Sweden data."""
     return covid19sweden.covid_deaths()
@@ -71,8 +71,6 @@ def region_names(nuts):
     """Region names for given nuts."""
     regs = regions()
     region_names = [regs[r]['name'] for r in nuts]
-    
-    # return
     return region_names
 def regions_df():
     # load regions

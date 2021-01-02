@@ -21,9 +21,14 @@ cartography.SE_map()
 import plot
 plot.adjacency_matrix()
 
+# regional traceplots, sex/gender violin plots
+plot.gender_age_violinplot()
+
 # knn filter
 plot.deaths_smooth('PL22')
-plot.dtw_plot('PL9','PL22')
+plot.dtw_plot('PL9','PL22',font_size = 12)
+# appendix
+plot.dtw_plot_appendix()
 
 # run tests
 import hypotheses
@@ -53,10 +58,14 @@ plot.location_score_heatmap(h = 100) # combination
 plot.deaths_country_series()
 
 # weekday ratio
-
 print( hypotheses.weekdays_equal_ratio(pi = False) )
 #plot.weekday_ratio_heatmap()
 
+# results
+cartography.map_results(['SE121','SE312','SE313','SE125','SE231'])
+cartography.map_results(['SE224','SE221','SE213','SE322','SE214'])
+cartography.map_results(['CZ020','CZ031','CZ052','CZ051','CZ064',
+                         'PL42$','PL63$','PL61$'])
 
 
 

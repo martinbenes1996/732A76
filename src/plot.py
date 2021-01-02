@@ -8,7 +8,7 @@ Module to generate plots.
 import sys
 sys.path.append("src")
 
-from datetime import datetime
+from datetime import datetime,timedelta
 from dtw import *
 import numpy as np
 import pandas as pd
@@ -212,18 +212,10 @@ def deaths_dtw_czekanowski(*args, **kw):
 def deaths_country_series():
     
     # read data
-    data = _covid.deaths_df()
-    
-    # data by country
-    data['country'] = data.region\
-        .apply(lambda i: i[:2])
-    data = data\
-        .groupby(['date','country'])\
-        .aggregate({'deaths': 'sum'})\
-        .reset_index()
+    data = _covid.country_deaths()
     
     # plot
-    plt.rcParams.update({'font.size': 16})
+    plt.rcParams.update({'font.size': 13})
     sns.lineplot(data = data, x = "date", y = "deaths", hue = "country")
     plt.plot(2*[datetime(2020,7,31)], [0, data.deaths.max()], c = "black")
     plt.plot(2*[data.date.min()], [0, data.deaths.max()], c = "black")
@@ -284,21 +276,67 @@ def deaths_smooth(region):
     ax.plot(x, fx, c = 'r')
     plt.show()
     
-def dtw_plot(x, y, *args, **kw):
-    
+def dtw_plot(x, y, output = None, font_size = 13, *args, **kw):
+
     # data
     deaths = _covid.deaths_df()
+    idx_dt = deaths.date.unique() # date
     
     # smooth
-    plt.rcParams.update({'font.size': 16})
-    x1,x2,fx = _covid.deaths_smooth(x, deaths)
-    y1,y2,fy = _covid.deaths_smooth(y, deaths)
+    plt.rcParams.update({'font.size': font_size})
+    try:
+        x1,x2,fx = _covid.deaths_smooth(x, deaths)
+        y1,y2,fy = _covid.deaths_smooth(y, deaths)
+    except:
+        return
 
     # map names onto code
-    dtw(fx, fy, keep_internals=True, 
-        step_pattern=rabinerJuangStepPattern(6, "c"))\
-        .plot(type="twoway")
-    plt.show()
+    d = dtw(fx, fy, keep_internals=True, 
+        step_pattern=rabinerJuangStepPattern(6, "c"))
+    
+    # maxlen
+    xts,yts = d.query,d.reference
+    maxlen = max(len(xts), len(yts))
+    xts = numpy.pad(xts,(0,maxlen-len(xts)),"constant",constant_values=numpy.nan)
+    yts = numpy.pad(yts,(0,maxlen-len(yts)),"constant",constant_values=numpy.nan)
+    
+    # init plot
+    fig, ax = plt.subplots()
+    idx = numpy.linspace(0, len(d.index1) - 1)
+    idx = numpy.array(idx).astype(int)
+    # plot connections
+    for i in idx:
+        Lx = [idx_dt[d.index1[i]], idx_dt[d.index2[i]]]
+        Ly = [xts[d.index1[i]], yts[d.index2[i]]]
+        ax.plot(Lx, Ly, c = 'gray',
+                linestyle='--', linewidth=1.5)
+    # plot two lines
+    ax.plot(x1, xts, label=x, color='k')
+    ax.plot(x1, yts, label=y)
+    # rest of plot
+    #ax.set_title('%s - %s' % (x,y))
+    ax.set_ylabel('deaths')
+    ax.set_xlabel('date')
+    ax.legend()
+    
+    if output is None:
+        plt.show()
+    else:
+        with open('%s/dtw_%s_%s.png' % (output,x,y), 'wb') as fp:
+            fig.savefig(fp)
+    plt.close(fig = fig)
+
+def dtw_plot_appendix(output = 'output/img/series/dtw'):
+    """DTW plots in report appendix."""
+    # regions
+    regs = _src.regions()
+    regsL = [(v) for v in regs.values()]
+    
+    # iterate
+    for r1 in range(len(regs)):
+        for r2 in range(r1+1, len(regs)):
+            dtw_plot(regsL[r1]['NUTS3'], regsL[r2]['NUTS3'],
+                     output = output, font_size = 12)
 
 def weekday_ratio_heatmap():
     
@@ -310,3 +348,13 @@ def weekday_ratio_heatmap():
     sns.heatmap(D, xticklabels=lab, yticklabels=lab)
     plt.show()
 
+def gender_age_violinplot():
+    
+    # data
+    x = _covid.gender_age_cases()
+    
+    # plot
+    plt.rcParams.update({'font.size': 20})
+    sns.violinplot(x="country", y="age", hue="sex", data = x)
+    plt.show()
+    

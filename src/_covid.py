@@ -17,6 +17,9 @@ from scipy.spatial.distance import correlation
 from seriate import seriate
 from sklearn.neighbors import KNeighborsRegressor
 
+import covid19czechia
+import covid19poland
+
 import _czekanowski
 import _src
 
@@ -37,7 +40,7 @@ def sweden_resample():
         dt_week = [dt + timedelta(days = j) for j in range(7)]
         # sampling
         day_deaths = multinomial(i.deaths, [1/7.]*7, size = 1)[0]
-        
+
         # append
         d['date'] = [*(d['date']), *dt_week]
         d['deaths'] = [*(d['deaths']), *day_deaths]
@@ -48,6 +51,85 @@ def sweden_resample():
     # return dataframe
     return pd.DataFrame(d)\
         .sort_values(['date','region'])
+
+def country_deaths():
+    """Fetch total country covid-19 death data."""
+    def _region_to_country(x):
+        return x\
+            .groupby(['date'])\
+            .size()\
+            .reset_index(name = 'deaths')
+    # Poland
+    pl = covid19poland.covid_death_cases(from_github = True)
+    pl = _region_to_country(pl)
+    pl['country'] = 'PL'
+    # Czechia
+    cz = _src.czechia()
+    cz = _region_to_country(cz)
+    cz['country'] = 'CZ'
+    # Sweden
+    se = sweden_resample()
+    se = se[['date','deaths']]\
+        .groupby(['date'])\
+        .sum()\
+        .reset_index()
+    se['country'] = 'SE'
+    
+    # match same dates
+    dt_range = pd.date_range(
+        start = min(cz.date.min(), pl.date.min(), se.date.min()),
+        end = min(cz.date.max(), pl.date.max(), se.date.max())
+    )
+    cz = cz[cz.date.isin(dt_range)]
+    pl = pl[pl.date.isin(dt_range)]
+    se = se[se.date.isin(dt_range)]
+    # merge
+    df = pd.concat([pl,cz,se])
+    
+    # fill missing
+    missing_rows = {'date': [], 'country': [], 'deaths': []}
+    for dt in dt_range:
+        for c in df.country.unique():
+            row = df[(df.date == dt) & (df.country == c)]
+            if row.empty:
+                missing_rows['date'].append(dt)
+                missing_rows['country'].append(c)
+                missing_rows['deaths'].append(0)
+    df = pd.concat([df, pd.DataFrame(missing_rows)], ignore_index = True)
+    
+    # return
+    df = df\
+        .sort_values(['date','country'])\
+        .reset_index(drop = True)
+    return df
+
+def gender_age_cases():
+    """Fetch total country covid-19 death data."""
+    def _region_to_country(x):
+        return x\
+            .groupby(['date','age','sex'])\
+            .size()\
+            .reset_index(name = 'deaths')
+    # Poland
+    pl = covid19poland.covid_death_cases(from_github = True)
+    pl = _region_to_country(pl)
+    pl['country'] = 'PL'
+    # Czechia
+    cz = _src.czechia()
+    cz = _region_to_country(cz)
+    cz['country'] = 'CZ'
+    
+    # match same dates
+    dt_range = pd.date_range(
+        start = min(cz.date.min(), pl.date.min()),
+        end = min(cz.date.max(), pl.date.max())
+    )
+    cz = cz[cz.date.isin(dt_range)]
+    pl = pl[pl.date.isin(dt_range)]
+    # merge
+    df = pd.concat([pl,cz])
+    
+    return df
 
 cachedata = None
 def deaths_df():
