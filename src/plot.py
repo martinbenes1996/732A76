@@ -19,7 +19,8 @@ plt.rcParams["figure.figsize"] = (12,10)
 
 import location
 import _src
-import _covid
+#import _covid
+import _covid_weeks as _covid
 
 def centroid_distance_heatmap(h = 100, name = None, countries = None):
     
@@ -188,7 +189,9 @@ _seed = 54321
 def _dtw_data(*args, **kw):
     global _dtwcache, _seed
     key = str(args) + str(kw)
-    try: return _dtwcache[key]
+    try:
+        raise Exception
+        return _dtwcache[key]
     except:
         np.random.seed = _seed
         _dtwcache[key] = _covid.czekanowski_dtw(*args, **kw)
@@ -204,7 +207,7 @@ def deaths_dtw_czekanowski(*args, **kw):
     P = _dtw_data(*args, **kw)
     
     # plot
-    plt.rcParams.update({'font.size': 12})
+    plt.rcParams.update({'font.size': 10})
     plt.scatter(P.x, P.y, s = (P.Distance), alpha = .9, c = 'black')
     plt.xticks(rotation=90)
     plt.show()
@@ -215,14 +218,15 @@ def deaths_country_series():
     data = _covid.country_deaths()
     
     # plot
-    plt.rcParams.update({'font.size': 13})
+    plt.rcParams.update({'font.size': 12})
     sns.lineplot(data = data, x = "date", y = "deaths", hue = "country")
     plt.plot(2*[datetime(2020,7,31)], [0, data.deaths.max()], c = "black")
     plt.plot(2*[data.date.min()], [0, data.deaths.max()], c = "black")
     plt.show()
     
 def deaths_dtw_czekanowski_global():
-    deaths_dtw_czekanowski(h = .008, coef = 300, random_starts = 1)
+    deaths_dtw_czekanowski(h = .009, coef = 300, seriate_method = "Um",
+                           random_starts = 1)
 
 def deaths_dtw_czekanowski_firstWave():
     
@@ -232,10 +236,12 @@ def deaths_dtw_czekanowski_firstWave():
     data = data[data.date < datetime(2020, 8, 1)]
     
     # czekanowski of the first wave
-    deaths_dtw_czekanowski(data = data, h = .008, coef = 250, random_starts = 1)
+    deaths_dtw_czekanowski(data = data, h = .008, seriate_method = "OLO",
+                           coef = 250, random_starts = 1)
 
 def deaths_dtw_czekanowski_sweden():
-    deaths_dtw_czekanowski(h = .035, coef = 300, random_starts = 1)
+    deaths_dtw_czekanowski(h = .035, coef = 300, seriate_method = "OLO",
+                           random_starts = 1)
 
 def deaths_dtw_czekanowski_sweden_firstWave():
     
@@ -245,7 +251,8 @@ def deaths_dtw_czekanowski_sweden_firstWave():
     data = data[data.date < datetime(2020, 8, 1)]
     
     # czekanowski of the first wave
-    deaths_dtw_czekanowski(data = data, h = .035, coef = 300, random_starts = 1)
+    deaths_dtw_czekanowski(data = data, h = .035, seriate_method = "OLO",
+                           coef = 300, random_starts = 1)
     
 
 def deaths_dtw_heatmap(*args, **kw):
