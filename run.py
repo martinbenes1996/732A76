@@ -16,6 +16,7 @@ logging.basicConfig(level = logging.INFO)
 import cartography
 cartography.CZ_PL_map()
 cartography.SE_map()
+exit()
 
 # adjacency matrix
 import plot

@@ -127,7 +127,7 @@ def plot_map(assets, regions, colors = {}, font_size = 15):
     # add boundaries
     boundaries.plot(ax = ax, color = "black", linewidth = .8, aspect = w)
     # add labels
-    centers.apply(lambda s: plt.annotate(text = s.id, xy = s.geometry.coords[0], ha='center'),axis=1)
+    centers.apply(lambda s: ax.annotate(text = s.id, xy = s.geometry.coords[0], ha='center'),axis=1)
 
     # set crop
     x_over,y_over = min(1, 20/(maxx - minx)),min(1, 20/(maxy - minx))
