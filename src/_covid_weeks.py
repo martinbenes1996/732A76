@@ -17,6 +17,9 @@ from scipy.spatial.distance import correlation
 from seriate import seriate
 from sklearn.neighbors import KNeighborsRegressor
 
+import _covid
+from _covid import sweden_resample
+
 import covid19czechia
 import covid19poland
 
