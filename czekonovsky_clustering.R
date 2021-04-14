@@ -32,6 +32,22 @@ pop_dens_geog <- read.csv(
   "./data/clustering_distance_datasets/pop_dens_geog.csv",
   row.names = 1)
 
+ts_cases_100k_wo_dtw <-read.csv(
+  "./data/clustering_distance_datasets/ts_cases_100k_wo_dtw.csv",
+  row.names = 1)
+
+ts_deaths_100k_wo_dtw <-read.csv(
+  "./data/clustering_distance_datasets/ts_deaths_100k_wo_dtw.csv",
+  row.names = 1)
+
+ts_cases_100k_w_dtw <-read.csv(
+  "./data/clustering_distance_datasets/ts_cases_100k_w_dtw.csv",
+  row.names = 1)
+
+ts_deaths_100k_w_dtw <-read.csv(
+  "./data/clustering_distance_datasets/ts_deaths_100k_w_dtw.csv",
+  row.names = 1)
+
 # import library
 library(RMaCzek)
 
@@ -44,3 +60,9 @@ plot(czek_matrix(pop_pop_dens, scale_data = FALSE, n_classes = 6))
 plot(czek_matrix(pop_dens, scale_data = FALSE, n_classes = 6))
 plot(czek_matrix(pop_dens_adj, scale_data = FALSE, n_classes = 6))
 plot(czek_matrix(pop_dens_geog, scale_data = FALSE, n_classes = 6))
+
+par(mar=c(8,8,4,1))
+plot(czek_matrix(ts_cases_100k_wo_dtw, scale_data = FALSE, n_classes = 6))
+plot(czek_matrix(ts_deaths_100k_wo_dtw, scale_data = FALSE, n_classes = 6))
+plot(czek_matrix(ts_cases_100k_w_dtw, scale_data = FALSE, n_classes = 4))
+plot(czek_matrix(ts_deaths_100k_w_dtw, scale_data = FALSE, n_classes = 6))
