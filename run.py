@@ -67,7 +67,4 @@ cartography.map_results(['SE224','SE221','SE213','SE322','SE214'])
 cartography.map_results(['CZ020','CZ031','CZ052','CZ051','CZ064',
                          'PL42$','PL63$','PL61$'])
 
-
-
-
  
